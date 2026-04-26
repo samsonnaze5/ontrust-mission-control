@@ -1,0 +1,2 @@
+id,priority,title,description,references,notes,skip,completed_at,commit,summary,retro_refs,drift_resolution
+Xy7K9mNpQ2vR,P1,[EXAMPLE] Add Kafka consumer lag alert,เพิ่ม alert ใน Grafana ตาม BL-017 (mt5-deal-pipeline),BL-017;artifacts/mt5-deal-pipeline/backlog-nonfunctional.csv,—,,2026-04-26,abc1234,เพิ่ม alert rule + Grafana dashboard panel + test ด้วย mock data — ลบ row นี้ตอนเริ่มใช้จริง,#41827;#62094,

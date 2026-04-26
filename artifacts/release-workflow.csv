@@ -1,0 +1,13 @@
+step,phase,from_branch,to_branch,target_env,trigger_type,ci_pipeline,approval_required,approver_role,notes
+1,Open feature,main,feature/*,n/a,manual (developer),n/a,no,n/a,Short-lived branch — branched from main
+2,Push to feature,feature/*,feature/*,n/a,auto on push,github-actions/build.yml,no,n/a,Build + lint + unit test only (no deploy)
+3,Open PR feature → develop,feature/*,develop,n/a,auto on PR open,github-actions/pr-check.yml,yes,Peer Reviewer,Requires green CI + 1 approval before merge
+4,Merge PR to develop,feature/*,develop,DEV,auto on merge,github-actions/deploy-dev.yml,no,n/a,Squash merge; auto-deploys to DEV
+5,Cut release branch,develop,release/x.y,SIT,manual cut,github-actions/deploy-sit.yml,yes,Release Manager,Version-locked branch; freeze new features
+6,SIT testing,release/x.y,release/x.y,SIT,n/a,n/a,no,n/a,QA + SA + PM run scenarios; bugfix commits go directly to release/x.y
+7,Promote to UAT,release/x.y,release/x.y,UAT,manual approval,github-actions/deploy-uat.yml,yes,QA Lead,After SIT sign-off
+8,UAT testing,release/x.y,release/x.y,UAT,n/a,n/a,no,n/a,External customers test; defects route back to release/x.y
+9,Promote to PRD,release/x.y,main,Production,manual approval + tag vX.Y.Z,github-actions/deploy-prd.yml,yes,Release Manager + CTO,After UAT customer sign-off; merge release branch back to main + tag
+10,Hotfix branch,main,hotfix/*,n/a,manual,n/a,no,n/a,Branched directly from main; emergency only
+11,Hotfix deploy to PRD,hotfix/*,main,Production,manual approval + tag,github-actions/deploy-prd.yml,yes,CTO,Emergency fix bypass — minimal scope
+12,Backport hotfix to develop,main,develop,DEV,manual PR,github-actions/deploy-dev.yml,yes,Peer Reviewer,Prevent regression in next release cycle

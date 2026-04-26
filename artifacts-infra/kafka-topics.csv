@@ -1,0 +1,36 @@
+topic,cluster,domain,defined_in,purpose
+mt5.transactions.in,crmprdkafka,MT5,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,MT5 deal-in events from MT5 Manager → ingestor
+mt5.transactions.out,crmprdkafka,MT5,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,MT5 deal-out events from MT5 Manager → ingestor
+mt5.balance,crmprdkafka,MT5,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,MT5 balance updates from MT5 Manager
+deal.in,crmprdkafka,Deal,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,Deal pipeline — inbound deal events
+deal.out,crmprdkafka,Deal,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,Deal pipeline — outbound deal events
+deal.complete,crmprdkafka,Deal,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,Deal pipeline — completed deals
+deal.delete-db,crmprdkafka,Deal,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,Deal pipeline — database deletion events
+deal.delete-mapped-db,crmprdkafka,Deal,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,Deal pipeline — mapped database deletion events
+ib.checking-paid,crmprdkafka,IB,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,IB partner — checking paid confirmations
+ib.rebate,crmprdkafka,IB,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,IB partner — rebate events
+ib.wallet-transaction,crmprdkafka,IB,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,IB partner — wallet transactions
+ib.rebate-transaction,crmprdkafka,IB,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,IB partner — rebate transactions
+ib.rebate-paid,crmprdkafka,IB,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,IB partner — rebate payments
+ib.balance-consume,crmprdkafka,IB,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,IB partner — balance consumption
+ib.balance-history,crmprdkafka,IB,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,IB partner — balance history
+ib.delete-consume,crmprdkafka,IB,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,IB partner — deletion consume events
+ib.rebate-delete-consume,crmprdkafka,IB,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,IB partner — rebate deletion consume events
+debezium-deal-configs,crmprdkafka,Debezium,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,Debezium internal — Deal connector configuration
+debezium-deal-offsets,crmprdkafka,Debezium,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,Debezium internal — Deal connector offset tracking
+debezium-deal-status,crmprdkafka,Debezium,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,Debezium internal — Deal connector status
+debezium-ib-configs,crmprdkafka,Debezium,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,Debezium internal — IB connector configuration
+debezium-ib-offsets,crmprdkafka,Debezium,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,Debezium internal — IB connector offset tracking
+debezium-ib-status,crmprdkafka,Debezium,kubeflow/prd/eks/kafka-streams/kafka-topics-setup.yaml,Debezium internal — IB connector status
+stream.ingest,crm-prd-kafka-stream,Stream,kubeflow/prd/eks/kafka-streams/topic-init-job.yaml,Stage 1 — entry point for transaction stream pipeline
+stream.transition-out-1,crm-prd-kafka-stream,Stream,kubeflow/prd/eks/kafka-streams/topic-init-job.yaml,Stage 1 — routing output for type=0 (deposit)
+stream.transition-out-2,crm-prd-kafka-stream,Stream,kubeflow/prd/eks/kafka-streams/topic-init-job.yaml,Stage 1 — routing output for type=1 (withdrawal)
+stream.pending,crm-prd-kafka-stream,Stream,kubeflow/prd/eks/kafka-streams/topic-init-job.yaml,Stage 2 — retry / unmatched transactions
+stream.pay,crm-prd-kafka-stream,Stream,kubeflow/prd/eks/kafka-streams/topic-init-job.yaml,Stage 2→3 — trigger payment processing
+stream.paid,crm-prd-kafka-stream,Stream,kubeflow/prd/eks/kafka-streams/topic-init-job.yaml,Stage 3→ — payment confirmed signal
+stream.sync,crm-prd-kafka-stream,Stream,kubeflow/prd/eks/kafka-streams/topic-init-job.yaml,Final sync / audit trail (30d retention)
+stream.dlq,crm-prd-kafka-stream,Stream,kubeflow/prd/eks/kafka-streams/topic-init-job.yaml,Dead-letter queue — max retries exceeded (30d retention)
+mt5.deal.in.received,crm-prd-kafka-stream,MT5,kubeflow/prd/eks/kafka-streams/topic-init-job.yaml,MT5 CDC — inbound deals (Debezium pre-create; 48p for KEDA ceiling)
+mt5.deal.out.received,crm-prd-kafka-stream,MT5,kubeflow/prd/eks/kafka-streams/topic-init-job.yaml,MT5 CDC — outbound deals (Debezium pre-create; 48p for KEDA ceiling)
+mt5.position.created,crm-prd-kafka-stream,MT5,kubeflow/prd/eks/kafka-streams/topic-init-job.yaml,MT5 CDC — positions created (Debezium pre-create; 48p for KEDA ceiling)
+mt5.processor.deal.out.created,crm-prd-kafka-stream,MT5,kubeflow/prd/eks/kafka-streams/topic-init-job.yaml,MT5 fan-out from deals-out-ingestor (48p for upstream parity)

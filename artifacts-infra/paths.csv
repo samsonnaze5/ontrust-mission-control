@@ -1,0 +1,2 @@
+infra,path,description
+aeternix-crm,/Users/kittiphong/Desktop/codes/terraform/aeternix-crm,"Main infra mono-repo (AWS) — git@github.com:aeternixth/aeternix-crm.git. Contains: Terraform stacks (kubeflow/{prd,eu-west-2}/terraform), Kustomize (deploy/{base,overlays,sonarqube}), K8s manifests per env (kubeflow/{dev,sit,uat,prd}), Jenkins (Jenkinsfile, Jenkinsfile.prd), GitHub Actions (.github/workflows). ทุก stack/path ที่อ้างถึงใน _index.csv และ terraform-modules.csv อยู่ภายใต้ repo นี้ ยกเว้น onetrust-terraform-sit"

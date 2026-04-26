@@ -1,0 +1,5 @@
+sequence,environment,purpose,audience,stability,update_frequency,deploy_branch,infra_stack,notes
+1,DEV,Integration test for active development,Frontend + Backend dev teams,unstable,daily,develop,artifacts-infra/deploy-overlays/dev,Update รายวัน — feature ค้างนิด ๆ ก็ deploy ทันที
+2,SIT,System integration test ก่อนให้ลูกค้า,QA + PM + SA teams,pre-release,per-sprint,release/x.y,artifacts-infra/deploy-overlays/sit,Run test scenarios ครบ ก่อน promote UAT
+3,UAT,User acceptance test ก่อน Production,External customers (selected),pre-release,per-release-candidate,release/x.y,artifacts-infra/deploy-overlays/uat,รอ customer sign-off ก่อน promote
+4,Production,Live production,All real users,stable,on-release,main,artifacts-infra/prd,No manual intervention except hotfix path

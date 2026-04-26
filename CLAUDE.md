@@ -117,3 +117,143 @@ The purpose: turn every task into a feedback loop. The human gets a running back
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+
+---
+
+## 8. Mission Control Operating Manual
+
+This repo is the artifact hub. The real code lives in target repos listed in
+`artifacts/services.csv`. Your job from here is to **read artifacts → write
+code at target paths**.
+
+### 8.1 Project Compass — where to find things
+
+| What you need | Path |
+|---|---|
+| Service list + paths | `artifacts/services.csv` |
+| DB list | `artifacts/databases.csv` |
+| Env vars catalog (no values) | `artifacts/envs.csv` |
+| Paths to ignore in scans | `artifacts/ignore.csv` |
+| Deployment environments (DEV/SIT/UAT/PROD) | `artifacts/environments.csv` |
+| Git workflow + release process + CI/CD mapping | `artifacts/release-workflow.csv` |
+| DB schema (per DB, per table) | `artifacts/schemas/<db>/tables/<table>.csv` |
+| Enum constants (Go-extracted) | `artifacts/schemas/<db>/enums/<table>.csv` |
+| Code conventions (per service) | `artifacts/conventions/<service>/{dependencies,structure,logging,testing}.md` |
+| Pipeline documentation | `artifacts/<pipeline-name>/` |
+| Infrastructure | `artifacts-infra/` |
+| Active task queue | `tasks/inbox.csv` |
+| Completed work | `tasks/done.csv` |
+| Artifact freshness | `artifacts/<set>/_meta.csv` |
+
+If you don't see it in the table → check `artifacts/INDEX.md`. If still
+missing → ASK; do not guess.
+
+### 8.2 Task Bootup Procedure (run before EVERY task)
+
+```
+1. Parse task → identify (a) target service, (b) artifact dependencies
+2. Drift check:
+   - Read _meta.csv of relevant artifact set
+   - If `extracted_by` is `bootstrap` → SHA is placeholder (`EXAMPLE_SHA_*`);
+     treat as unconditionally stale → ASK user to refresh before trusting
+   - cd to target repo path; git rev-parse HEAD
+   - If commit differs from _meta.source_commit_sha:
+     → Show user: "drift: artifact at SHA-A, target at SHA-B (N commits ahead)"
+     → ASK: refresh now / proceed stale / abort
+     → Log decision in tasks/done.csv (drift_resolution column)
+3. Read artifacts in this order:
+   a. artifacts/INDEX.md
+   b. artifacts/services.csv (confirm path + branch)
+   c. artifacts/conventions/<service>/*.md
+   d. artifacts/schemas/<db>/ (only DBs involved)
+   e. Target repo's CLAUDE.md / AGENTS.md (if any)
+4. Plan code change → execute in target repo (NOT in mission-control)
+5. Commit in target repo (NOT here)
+6. Post-task:
+   - Append to tasks/done.csv (id, completed_at, commit_sha, summary, retro_refs)
+   - If you changed schema → task schemas:refresh
+   - If you changed enum → task enums:extract
+   - If you observed an undocumented convention → flag in retrospective
+```
+
+### 8.3 Path & Scope Discipline
+
+- **Mission-control is read-only for source code.** Never edit `.go`, `.py`,
+  etc. of target repos from inside this repo.
+- **Always use absolute paths from `services.csv`.** Never resolve relative.
+- **Verify path exists** (`os.path.exists` / `ls`) before any task; fail fast.
+- **Commit boundaries:**
+  - Code changes → commit in target repo
+  - Artifact updates / inbox / done → commit here
+- **Task does not specify a service → STOP & ASK.** Do not guess.
+
+### 8.4 Convention Authority
+
+- Convention docs in `artifacts/conventions/` are the **source of truth**.
+- If target repo's actual code contradicts the convention doc:
+  - **STOP & ASK** before writing new code in conflicting style
+  - Flag in retrospective for human to reconcile
+- Conventions have status: `stable | draft | deprecated`. Do not lock in
+  `draft` patterns.
+- Per-service exceptions are listed in the convention's `exceptions:` field.
+
+### 8.5 Testing — STOP & ASK (until convention established)
+
+Testing convention has **not been established yet** for this org
+(see `tasks/inbox.csv` task `EST-TEST-001`).
+
+Until that task is closed:
+
+- Do NOT write tests proactively
+- If a task explicitly asks "write tests" → ASK user for the testing pattern
+  they want; do not guess
+- If you must write tests to verify your fix → write the minimum + flag for
+  convention review
+
+### 8.6 Refresh Triggers (when user says "update artifacts")
+
+The phrase "update artifacts" is ambiguous. **Always ask scope** unless user
+specified one of these:
+
+| User says | Action |
+|---|---|
+| "update artifacts" | ASK: "all? schemas? service X?" |
+| "update artifacts all" | run all extractors in sequence |
+| "update schemas" / "update schemas <db>" | `task schemas:refresh` (scoped) |
+| "update enums" | `task enums:extract` |
+| "update service <name>" | refresh all artifacts touching that service |
+| "update convention <service>" | guided human review (you can't auto) |
+
+After every refresh:
+
+- Diff before/after; show summary to user
+- Update `_meta.csv` with timestamp + source SHA + correct `extracted_by`:
+  - `claude` when YOU ran the refresh during a task
+  - `user` when the human ran it manually
+  - `ci` when triggered by a scheduled job
+  - `bootstrap` only for initial placeholder rows — never set this yourself
+- Mark partial failures explicitly (don't silently skip)
+
+### 8.7 Auto-refreshable vs Human-curated Artifacts
+
+| Auto-refreshable (Claude can run extractor) | Human-curated (Claude cannot auto-update) |
+|---|---|
+| `schemas/<db>/tables/` | `services.csv` |
+| `schemas/<db>/enums/` | `databases.csv`, `envs.csv` |
+| `schemas/<db>/_index.csv` | `conventions/<service>/*.md` |
+|  | `<pipeline>/` docs |
+|  | `terraform-modules.csv` |
+
+For human-curated → propose changes via retrospective; never edit silently.
+
+## 9. Files to Read at Session Start
+
+When a fresh session begins (before any task):
+
+1. This file (CLAUDE.md) — already loaded
+2. `artifacts/INDEX.md` — top-level taxonomy (~60 lines)
+3. `tasks/inbox.csv` — current queue
+4. Skip `_bmad/`, `_bmad-output/` — sandboxed, not relevant to coding work
+
+Do **not** preload schemas / conventions / pipeline docs — load on-demand
+per task per §8.2.

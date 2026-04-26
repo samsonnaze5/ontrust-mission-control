@@ -1,0 +1,2 @@
+last_extracted_at,extracted_by,source_commit_sha,source_repo,source_branch,notes
+2026-04-26T00:00:00Z,bootstrap,EXAMPLE_SHA_REPLACE_AFTER_FIRST_REFRESH,onetrust-client-portal-api,main,EXAMPLE row — replace with real values after first `task schemas:refresh` run. See CLAUDE.md §8.2 for usage.
