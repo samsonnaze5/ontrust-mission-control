@@ -1,0 +1,4 @@
+column_name,go_field,enum_value,go_const,enum_group,source_struct
+status,Status,COMPLETED,RebateSettlementStatusCompleted,RebateSettlementStatus,RebateSettlement
+status,Status,FAILED,RebateSettlementStatusFailed,RebateSettlementStatus,RebateSettlement
+status,Status,PENDING,RebateSettlementStatusPending,RebateSettlementStatus,RebateSettlement

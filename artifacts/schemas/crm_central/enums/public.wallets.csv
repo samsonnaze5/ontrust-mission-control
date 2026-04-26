@@ -1,0 +1,6 @@
+column_name,go_field,enum_value,go_const,enum_group,source_struct
+status,Status,ACTIVE,WalletStatusActive,WalletStatus,Wallet
+status,Status,CLOSED,WalletStatusClosed,WalletStatus,Wallet
+status,Status,FROZEN,WalletStatusFrozen,WalletStatus,Wallet
+wallet_type,WalletType,DEFAULT,WalletTypeDefault,WalletType,Wallet
+wallet_type,WalletType,IB,WalletTypeIB,WalletType,Wallet

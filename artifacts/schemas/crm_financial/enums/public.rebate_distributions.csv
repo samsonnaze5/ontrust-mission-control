@@ -1,0 +1,4 @@
+column_name,go_field,enum_value,go_const,enum_group,source_struct
+calculation_type,CalculationType,CONTRACT_SIZE,CalculationTypeContractSize,CalculationType,RebateDistribution
+calculation_type,CalculationType,FIX_LOT,CalculationTypeFixLot,CalculationType,RebateDistribution
+calculation_type,CalculationType,SPREAD_PCT,CalculationTypeSpreadPct,CalculationType,RebateDistribution

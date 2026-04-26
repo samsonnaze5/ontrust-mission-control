@@ -1,0 +1,4 @@
+column_name,go_field,enum_value,go_const,enum_group,source_struct
+status,Status,ACTIVE,RebateLineStatusActive,RebateLineStatus,RebateLine
+status,Status,INACTIVE,RebateLineStatusInactive,RebateLineStatus,RebateLine
+status,Status,UNASSIGNED,RebateLineStatusUnassigned,RebateLineStatus,RebateLine

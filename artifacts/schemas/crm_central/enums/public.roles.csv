@@ -1,0 +1,7 @@
+column_name,go_field,enum_value,go_const,enum_group,source_struct
+code,Code,ADMIN_CS,RoleCodeCS,RoleCode,Role
+code,Code,ADMIN_MANAGER,RoleCodeManager,RoleCode,Role
+code,Code,ADMIN_SALE,RoleCodeSale,RoleCode,Role
+code,Code,ADMIN_SUPER,RoleCodeAdmin,RoleCode,Role
+role_type,RoleType,ADMIN,RoleTypeAdmin,RoleType,Role
+role_type,RoleType,CLIENT,RoleTypeClient,RoleType,Role

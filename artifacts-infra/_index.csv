@@ -1,0 +1,9 @@
+stack,env,region,path,backend_state_key,description
+prd,prd,ap-southeast-1,kubeflow/prd/terraform,prd/terraform.tfstate,"Production stack หลัก — orchestrate modules 01-13 ครอบคลุม VPC, EKS, MT5 cluster, ClickHouse, RDS Aurora (6 clusters), MSK Kafka, observability, secrets, SES; state เก็บใน S3 bucket aeternix-crm-tfstate-prd พร้อม DynamoDB lock"
+eu-west-2,prd,eu-west-2,kubeflow/eu-west-2/terraform,eu-west-2/test-postgres.tfstate,"Standalone stack สำหรับ MT5 Test PostgreSQL ที่ London — VPC แยกต่างหาก (10.1.0.0/16) + RDS Postgres 16.13 (db.r7g.xlarge) เปิด port 5432 ให้ allowed_cidr_blocks; ใช้ทดสอบ MT5 trade orders 120M records จาก source 35.187.226.36"
+deploy-base,multi,multi,deploy/base,n/a,"Kustomize base manifests สำหรับ K8s workloads: be (backend), fe (frontend), ingress, pgbouncer, android, ios — ใช้ร่วมกับ overlays/{dev,sit,uat}"
+deploy-overlays,dev/sit/uat,multi,deploy/overlays,n/a,"Kustomize overlays per environment (dev/sit/uat) — patch base manifests ตาม env"
+deploy-sonarqube,multi,multi,deploy/sonarqube,n/a,"SonarQube install manifests (kustomization.yml + install.yaml)"
+kubeflow-manifests,dev/sit/uat/prd,multi,kubeflow/{env}/{be|fe|k9s|monitoring|eks|scripts},n/a,"K8s manifests จัดตาม env; prd มี eks/{archiver,finance-service,infisical,kafka-streams,monitoring}, monitoring/, scripts/ เพิ่มเติม นอกเหนือจาก be/fe/k9s ที่ env อื่นมี"
+ci-jenkins,multi,n/a,Jenkinsfile + Jenkinsfile.prd,n/a,"Jenkins pipelines (CI/CD) — Jenkinsfile (default) และ Jenkinsfile.prd (production-grade) — รายละเอียดใน jenkins.csv"
+ci-github-actions,multi,n/a,.github/workflows,n/a,"GitHub Actions workflow — trigger-jenkins-pipeline.yml ใช้ trigger Jenkins job"

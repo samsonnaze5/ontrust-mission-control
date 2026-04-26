@@ -1,0 +1,5 @@
+column_name,go_field,enum_value,go_const,enum_group,source_struct
+status,Status,FAILED,OutboxStatusFailed,OutboxStatus,OutboxEvent
+status,Status,PENDING,OutboxStatusPending,OutboxStatus,OutboxEvent
+status,Status,PROCESSING,OutboxStatusProcessing,OutboxStatus,OutboxEvent
+status,Status,PUBLISHED,OutboxStatusPublished,OutboxStatus,OutboxEvent

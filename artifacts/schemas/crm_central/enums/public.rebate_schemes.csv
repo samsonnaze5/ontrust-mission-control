@@ -1,0 +1,3 @@
+column_name,go_field,enum_value,go_const,enum_group,source_struct
+status,Status,ACTIVE,RebateSchemeStatusActive,RebateSchemeStatus,RebateScheme
+status,Status,INACTIVE,RebateSchemeStatusInactive,RebateSchemeStatus,RebateScheme

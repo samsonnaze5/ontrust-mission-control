@@ -1,0 +1,4 @@
+column_name,go_field,enum_value,go_const,enum_group,source_struct
+account_type,AccountType,SYSTEM,LedgerAccountTypeSystem,LedgerAccountType,LedgerAccount
+account_type,AccountType,TRADING,LedgerAccountTypeTrading,LedgerAccountType,LedgerAccount
+account_type,AccountType,WALLET,LedgerAccountTypeWallet,LedgerAccountType,LedgerAccount

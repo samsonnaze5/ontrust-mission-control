@@ -26,3 +26,8 @@ tasks:
     cmds:
       - task: schemas:clean
       - task: schemas:extract
+
+  enums:extract:
+    desc: Extract enum values from Go code → artifacts/schemas/<db>/enums/<table>.csv
+    cmds:
+      - python3 scripts/extract_enums.py

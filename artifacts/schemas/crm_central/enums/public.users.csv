@@ -1,0 +1,15 @@
+column_name,go_field,enum_value,go_const,enum_group,source_struct
+ib_status,IbStatus,IB,IBStatusIB,IBStatus,User
+ib_status,IbStatus,MIB,IBStatusMIB,IBStatus,User
+ib_status,IbStatus,RM,IBStatusRM,IBStatus,User
+ib_status,IbStatus,TRADER,IBStatusTrader,IBStatus,User
+kyc_status,KycStatus,APPROVED,KycStatusApproved,KycStatus,User
+kyc_status,KycStatus,PENDING,KycStatusPending,KycStatus,User
+kyc_status,KycStatus,REJECTED,KycStatusRejected,KycStatus,User
+registration_source,RegistrationSource,backoffice,RegistrationSourceBackoffice,RegistrationSource,User
+registration_source,RegistrationSource,mobile,RegistrationSourceMobile,RegistrationSource,User
+status,Status,ACTIVE,UserStatusActive,UserStatus,User
+status,Status,INACTIVE,UserStatusInactive,UserStatus,User
+status,Status,PENDING,UserStatusPending,UserStatus,User
+user_type,UserType,backoffice,UserTypeBackoffice,UserType,User
+user_type,UserType,client,UserTypeClient,UserType,User
