@@ -1,0 +1,15 @@
+id,category,target,requirement,target_value,verification,source,notes
+NFR-B-001,throughput,step 02 (snapshot-builder),sustained ingest rate,~10k snapshots/sec peak (ต่ำกว่า deal pipeline เพราะ MT5 ส่ง balance snapshot ความถี่ต่ำกว่า deals),load test → no lag accumulation,inferred,user ระบุเฉพาะ deal pipeline — balance volume ต่ำกว่ามาก
+NFR-B-002,durability,step 05 (snapshot-archived),snapshot ทั้งหมดต้องเข้า ClickHouse 100% — ห้าม drop,count(CH rows) == count(committed Kafka offsets) tolerance < 0.01%,daily reconciliation job,user-stated,user-stated requirement applies ทั้ง 2 pipelines
+NFR-B-003,resource,all consumers + worker,CPU + memory ต้องไม่พุ่งเกิน,CPU < 80% sustained + heap < 80% pod limit + zero OOMKilled,Grafana monitoring,user-stated,—
+NFR-B-004,read-routing,all PG reads (snapshot-sync lookup + cleanup-watcher SELECT),read traffic ไป replica เท่านั้น ห้าม master,0% read to master,connection string review + pg_stat_activity audit,user-stated,DSN แยก primary/replica
+NFR-B-005,latency,step 05 (snapshot-archived),archive lag,p95 < 10 นาที (relaxed กว่า deal pipeline — balance ใช้ analytics history ไม่ realtime),Grafana monitoring,inferred,—
+NFR-B-006,latency,steps 06 → 07 (cleanup),daily cleanup SLA,snapshot DELETE ภายใน 24 ชั่วโมงหลัง archive,monitor balance DB size — settles into stable bound,inferred,daily worker cycle ที่ 00:00 UTC
+NFR-B-007,consistency,step 04 (snapshot-sync),latest_balance per account ต้องสะท้อน snapshot ล่าสุดเสมอ (out-of-order safe),query latest_balance ของ account → match snapshot ที่ time ใหม่สุดที่เคย consume,test inject 5 snapshots out-of-order → latest_balance = ตัวที่ time ใหม่สุด,inferred,handles out-of-order delivery
+NFR-B-008,durability,all consumers,replay จาก offset 0 ต้องไม่มี side effect,reset consumer group → ไม่มี duplicate equity history rows,test ใน staging environment,inferred,depends on BL-013
+NFR-B-009,backpressure,steps 02 + 05,consumer ต้องไม่ OOM ตอน burst (เช่น MT5 ส่ง catch-up หลัง downtime),batch flush + Kafka pause/resume,inject burst → no OOMKilled,inferred,—
+NFR-B-010,observability,all consumers + worker,per-component metrics + dashboards,consumer lag + throughput + error rate + heap + CPU per pod,Prometheus scrape + Grafana dashboard + alert rules,inferred,depends on BL-017
+NFR-B-011,scheduling,step 06 (cleanup-watcher),daily 00:00 UTC trigger ต้องแม่นยำ,actual run time within ±5 นาทีของ 00:00 UTC,k8s CronJob + log timestamp,inferred,depends on BL-004 implementation
+NFR-B-012,security,Kafka + PG + CH connections,TLS + auth + secrets ผ่าน vault,no plaintext credentials in env/code + mTLS for Kafka,security audit + secrets scan,standard,—
+NFR-B-013,scalability,step 02 + 04 + 05 (consumers),horizontal scale ผ่าน consumer group,scale 2x pods → throughput ≈ 2x,partition count ≥ 2x pod count,standard,—
+NFR-B-014,durability,Kafka topics ใน balance pipeline,topic retention พอสำหรับ replay,3 topics retention ≥ 3 วัน,Kafka admin describe topic,standard,relates to NFR-B-008

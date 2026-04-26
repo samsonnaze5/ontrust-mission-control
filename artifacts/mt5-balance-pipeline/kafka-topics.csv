@@ -1,0 +1,7 @@
+service,topic,role,consumer_group,notes
+onetrust-mt5-processor,mt5.account.balance.incoming,consume,mt5-account-balance-snapshot-builder,รับมาจาก MT5 ภายนอก (debezium จาก MT5 Database server) — snapshot ของ account balance
+onetrust-mt5-processor,mt5-processor.account.balance.snapshot.created,produce,,publish ผ่าน debezium จาก mt5_account_balance_snapshots [db:balance] หลัง snapshot-builder บันทึก
+onetrust-mt5-processor,mt5-processor.account.balance.snapshot.created,consume,mt5-account-balance-snapshot-sync,snapshot-sync ภายใน service เดียวกัน consume เพื่อบันทึก trading balance ลง DB
+onetrust-archived,mt5-processor.account.balance.snapshot.created,consume,mt5-account-balance-snapshot-archived,(scaffold) handler แค่ log message ตอนนี้ — ยังไม่ได้ archive ลง ClickHouse จริง
+onetrust-archived,mt5.account.balance.snapshot.clean,produce,,publish จาก worker mt5-account-balance-snapshot-cleanup-watcher (วันละ 1 ครั้งตอน 00:00) — trigger ให้ snapshot-cleaner ลบ row
+onetrust-archived,mt5.account.balance.snapshot.clean,consume,mt5-account-balance-snapshot-cleaner,trigger ให้ลบ row ของ snapshot หลัง archive ลง ClickHouse แล้ว

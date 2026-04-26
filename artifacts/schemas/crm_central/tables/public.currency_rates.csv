@@ -1,0 +1,12 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,iso,character varying(255),False,,False,False,False,,
+3,name,character varying(255),False,,False,False,False,,
+4,rate,"numeric(20,12)",False,,False,False,False,,"How many units of this currency (iso) per 1 unit of base_currency. E.g., rate=32.50 for THB/USD means 32.50 THB = 1 USD."
+5,base_currency,character varying(100),False,,False,False,False,,
+6,created_dated,timestamp with time zone,True,,False,False,False,,
+7,updated_dated,timestamp with time zone,True,,False,False,False,,
+8,created_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+9,updated_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+10,created_by_id,uuid,True,,False,False,False,,
+11,updated_by_id,uuid,True,,False,False,False,,

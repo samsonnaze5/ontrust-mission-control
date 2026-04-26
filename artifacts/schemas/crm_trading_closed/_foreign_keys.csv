@@ -1,0 +1,1 @@
+schema,table,constraint_name,column,referenced_schema,referenced_table,referenced_column,on_update,on_delete

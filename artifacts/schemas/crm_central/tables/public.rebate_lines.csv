@@ -1,0 +1,17 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,ib_user_id,uuid,False,,False,False,True,public.users.id,
+3,referral_link_id,uuid,True,,False,False,True,public.referral_links.id,
+4,executor_user_id,uuid,False,,False,True,True,public.users.id,
+5,rebate_scheme_id,uuid,True,,False,False,True,public.rebate_schemes.id,
+6,rebate_line_code,character varying(300),False,,False,True,False,,Human-readable identifier e.g. CID-00123|LINK-001|CID-00456
+7,label,character varying(200),True,,False,False,False,,
+8,status,character varying(20),False,'UNASSIGNED'::character varying,False,False,False,,
+9,hierarchy_snapshot,jsonb,True,,False,False,False,,"JSON array of {user_id, cid, ib_status, level} from executor up to MIB. Frozen at scheme assignment time."
+10,assigned_at,timestamp with time zone,True,,False,False,False,,
+11,assigned_by,uuid,True,,False,False,True,public.users.id,
+12,created_at,timestamp with time zone,False,now(),False,False,False,,
+13,updated_at,timestamp with time zone,False,now(),False,False,False,,
+14,deactivated_at,timestamp with time zone,True,,False,False,False,,
+15,deactivated_by,uuid,True,,False,False,True,public.users.id,
+16,deactivation_reason,character varying(500),True,,False,False,False,,

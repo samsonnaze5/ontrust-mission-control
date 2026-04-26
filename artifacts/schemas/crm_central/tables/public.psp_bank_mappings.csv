@@ -1,0 +1,9 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,bank_id,integer,False,,False,False,True,public.banks.id,
+2,psp_provider_id,uuid,False,,False,False,True,public.psp_providers.id,
+3,psp_bank_code,character varying(100),False,,False,False,False,,
+4,created_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+5,updated_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+6,created_by_id,uuid,True,,False,False,False,,
+7,updated_by_id,uuid,True,,False,False,False,,
+8,is_active,boolean,False,true,False,False,False,,

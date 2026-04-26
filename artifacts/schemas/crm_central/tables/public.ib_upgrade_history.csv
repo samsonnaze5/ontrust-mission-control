@@ -1,0 +1,13 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,user_id,uuid,False,,False,True,True,public.users.id,
+3,requested_by,uuid,False,,False,False,True,public.users.id,
+4,from_status,character varying(20),False,,False,False,False,,
+5,to_status,character varying(20),False,,False,False,False,,
+6,reason,text,True,,False,False,False,,
+7,created_at,timestamp with time zone,False,now(),False,False,False,,
+8,status,character varying,False,'APPROVED'::character varying,False,False,False,,
+9,action_type,character varying,False,'UPGRADE'::character varying,False,False,False,,
+10,reviewed_by,uuid,True,,False,False,True,public.users.id,
+11,reviewed_at,timestamp with time zone,True,,False,False,False,,
+12,review_reason,text,True,,False,False,False,,

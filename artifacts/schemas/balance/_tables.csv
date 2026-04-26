@@ -1,0 +1,4 @@
+schema,table,kind,row_count_estimate,size_bytes,comment
+public,goose_db_version,TABLE,-1,24576,
+public,mt5_account_balance_snapshots,TABLE,-1,32768,
+public,mt5_accounts,TABLE,-1,32768,

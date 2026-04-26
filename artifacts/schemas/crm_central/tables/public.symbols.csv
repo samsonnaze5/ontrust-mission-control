@@ -1,0 +1,7 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,symbol_group_id,uuid,False,,False,False,True,public.symbol_groups.id,
+3,symbol,character varying(50),False,,False,True,False,,
+4,is_active,boolean,False,true,False,False,False,,
+5,created_at,timestamp with time zone,False,now(),False,False,False,,
+6,updated_at,timestamp with time zone,False,now(),False,False,False,,

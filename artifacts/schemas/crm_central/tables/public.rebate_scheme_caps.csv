@@ -1,0 +1,11 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,rebate_scheme_id,uuid,False,,False,False,True,public.rebate_schemes.id,
+3,account_group_id,uuid,False,,False,False,True,public.mt5_account_groups.id,
+4,symbol_group_id,uuid,True,,False,False,True,public.symbol_groups.id,
+5,symbol_custom_group_id,uuid,True,,False,False,True,public.symbol_custom_groups.id,
+7,cap_target_type,character varying(20),False,,False,False,False,,
+8,max_rebate_usd,"numeric(10,6)",False,,False,False,False,,
+9,created_at,timestamp with time zone,False,now(),False,False,False,,
+10,updated_at,timestamp with time zone,False,now(),False,False,False,,
+22,symbol_id,uuid,True,,False,False,True,public.symbols.id,

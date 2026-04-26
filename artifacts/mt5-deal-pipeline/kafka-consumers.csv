@@ -1,0 +1,22 @@
+consumer_group,service,entry_point,consume_topic,publish_topic_direct,publish_topic_debezium,description
+mt5-deals-in-ingestor,onetrust-mt5-processor,cmd/mt5-deals-in-ingestor/main.go,mt5.deal.in.received,,mt5-processor.deal.in.created,รับ deal in (เปิด position) จาก MT5 ภายนอก แล้ว INSERT ลง mt5_deals_in [crm_trading_open]
+mt5-deals-out-ingestor,onetrust-mt5-processor,cmd/mt5-deals-out-ingestor/main.go,mt5.deal.out.received,,mt5-processor.deal.out.created,รับ deal out (ปิด position) จาก MT5 ภายนอก แล้ว INSERT ลง mt5_deals_out [crm_trading_closed]
+mt5-position-detector,onetrust-mt5-processor,cmd/mt5-position-detector/main.go,mt5-processor.deal.out.created,,mt5-processor.position.created,match deal in/out แล้ว INSERT position ที่ปิดสมบูรณ์ 100% ลง mt5_position_completes [crm_trading_complete]
+financial-rebate-calculator,onetrust-financial-service,cmd/financial-rebate-calculator/main.go,mt5-processor.deal.out.created,financial.rebate.calculated,,คำนวณ rebate ของแต่ละ deal แล้ว INSERT ลง rebate_distributions [crm_financial] และ publish financial.rebate.calculated
+financial-rebate-accrual-builder,onetrust-financial-service,cmd/financial-rebate-accrual-builder/main.go,financial.rebate.calculated,,financial.rebate.accrual.created,สะสม rebate ของ IB เป็น accrual rows ลง rebate_accruals [crm_financial]
+financial-rebate-earning-calculator,onetrust-financial-service,cmd/financial-rebate-earning-calculator/main.go,financial.wallet.transaction.created,,,update earning ของ IB หลังมี wallet transaction (write-only ลง DB)
+financial-wallet-transaction-writer,onetrust-financial-service,cmd/financial-wallet-transaction-writer/main.go,financial.rebate.settlement.created,,financial.wallet.transaction.created,consume settlement → INSERT wallet_transactions (REBATE_CREDIT) ลง crm_financial — debezium publish financial.wallet.transaction.created ต่อ — idempotent ตาม (reference_type=rebate_settlement + reference_id=settlement_id)
+mt5-deals-in-archived,onetrust-archived,cmd/mt5-deals-in-archived/main.go,mt5-processor.deal.in.created,,,archive mt5_deals_in ลง ClickHouse client
+mt5-deals-out-archived,onetrust-archived,cmd/mt5-deals-out-archived/main.go,mt5-processor.deal.out.created,,,archive mt5_deals_out ลง ClickHouse client
+mt5-position-archived,onetrust-archived,cmd/mt5-position-archived/main.go,mt5-processor.position.created,,,archive mt5_position_completes ลง ClickHouse client
+financial-rebate-distribution-archived,onetrust-archived,cmd/financial-rebate-distribution-archived/main.go,financial.rebate.calculated,,,archive rebate_distributions ลง ClickHouse ib
+financial-rebate-accrual-archived,onetrust-archived,cmd/financial-rebate-accrual-archived/main.go,financial.rebate.accrual.created,,,archive rebate_accruals ลง ClickHouse ib
+financial-rebate-settlement-archived,onetrust-archived,cmd/financial-rebate-settlement-archived/main.go,financial.rebate.settlement.created,,,archive rebate_settlements ลง ClickHouse ib
+financial-wallet-transaction-archived,onetrust-archived,cmd/financial-wallet-transaction-archived/main.go,financial.wallet.transaction.created,,,archive wallet_transactions ลง ClickHouse ib
+mt5-deals-in-cleaner,onetrust-archived,cmd/mt5-deals-in-cleaner/main.go,paid.clean,,,DELETE row ใน mt5_deals_in หลัง archive แล้ว
+mt5-deals-out-cleaner,onetrust-archived,cmd/mt5-deals-out-cleaner/main.go,paid.clean,,,DELETE row ใน mt5_deals_out หลัง archive แล้ว
+mt5-position-cleaner,onetrust-archived,cmd/mt5-position-cleaner/main.go,paid.clean,,,DELETE row ใน mt5_position_completes หลัง archive แล้ว
+mt5-rebate-distributions-cleaner,onetrust-archived,cmd/mt5-rebate-distributions-cleaner/main.go,paid.clean,,,DELETE row ใน rebate_distributions หลัง archive แล้ว
+financial-rebate-accruals-cleaner,onetrust-archived,cmd/financial-rebate-accruals-cleaner/main.go,paid.clean,,,DELETE row ใน rebate_accruals หลัง archive แล้ว
+financial-rebate-settlements-cleaner,onetrust-archived,cmd/financial-rebate-settlements-cleaner/main.go,paid.clean,,,DELETE row ใน rebate_settlements หลัง archive แล้ว
+financial-wallet-transactions-cleaner,onetrust-archived,cmd/financial-wallet-transactions-cleaner/main.go,paid.clean,,,DELETE row ใน wallet_transactions หลัง archive แล้ว

@@ -1,0 +1,9 @@
+database,env_prefix,description,migration_project_source,migration_path
+crm_trading_open,DATABASE_TRADING_IN_*,เก็บเฉพาะ deal in (เปิด position) จาก MT5 Trading,onetrust-mt5-processor,migrations/db-trading-in
+crm_trading_closed,DATABASE_TRADING_OUT_*,เก็บเฉพาะ deal out (ปิด position) จาก MT5 Trading,onetrust-mt5-processor,migrations/db-trading-out
+crm_trading_complete,DATABASE_POSITION_COMPLETE_*,เก็บ position ที่จับคู่ deal in/out แล้ว เฉพาะที่ปิดสมบูรณ์ 100%,onetrust-mt5-processor,migrations/db-position-complete
+crm_financial,DATABASE_FINANCIAL_*,"เก็บผลการคำนวณ rebate (distributions / accruals / settlements) และข้อมูลทางการเงินอื่นๆ ที่คำนวณต่อจาก deal out ใน crm_trading_closed",onetrust-financial-service,migrations/db-financial
+balance,DATABASE_TRADING_BALANCE_*,เก็บประวัติการเคลื่อนไหวของ Trading Account Equity เพื่อดู history กำไร/ขาดทุนตามช่วงเวลา,onetrust-mt5-processor,migrations/db-trading-balance
+crm_central,DATABASE_*,"ฐานข้อมูลหลักของ CRM — master data, settings, users และข้อมูลกลางอื่นๆ ที่ทุก service ใช้ร่วมกัน",onetrust-client-portal-api,migrations
+clickhouse_client,CLICKHOUSE_CLIENT_*,"ClickHouse ฝั่ง trading analytics — archive จาก crm_trading_open, crm_trading_closed, crm_trading_complete และ balance",onetrust-archived,migrations/clickhouse-client
+clickhouse_ib,CLICKHOUSE_IB_*,ClickHouse ฝั่ง IB/financial analytics — archive จาก crm_financial (rebate distributions / accruals / settlements / wallet transactions),onetrust-archived,migrations/clickhouse-ib

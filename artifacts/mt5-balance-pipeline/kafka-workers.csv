@@ -1,0 +1,2 @@
+worker_name,service,entry_point,trigger,publish_topic_direct,publish_topic_debezium,description
+mt5-account-balance-snapshot-cleanup-watcher,onetrust-archived,cmd/mt5-account-balance-snapshot-cleanup-watcher/main.go,daily 00:00 UTC,mt5.account.balance.snapshot.clean,,trigger ให้ snapshot-cleaner ลบ row หลัง archive ลง ClickHouse แล้ว — ปัจจุบัน binary ยัง scaffold (tick 1 นาที log TODO เฉยๆ ยังไม่ publish จริง)

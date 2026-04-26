@@ -1,0 +1,11 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,batch_type,character varying(20),False,,False,True,False,,
+3,status,character varying(20),False,'RUNNING'::character varying,False,False,False,,
+4,total_records,integer,False,0,False,False,False,,
+5,processed_records,integer,False,0,False,False,False,,
+6,failed_records,integer,False,0,False,False,False,,
+7,error_message,text,True,,False,False,False,,
+8,started_at,timestamp with time zone,False,now(),False,False,False,,
+9,completed_at,timestamp with time zone,True,,False,False,False,,
+10,last_data_timestamp,bigint,True,,False,False,False,,

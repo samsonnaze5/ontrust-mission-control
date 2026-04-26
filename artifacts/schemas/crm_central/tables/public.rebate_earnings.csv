@@ -1,0 +1,7 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,user_id,uuid,False,,False,True,True,public.users.id,
+3,total_earned,"numeric(20,6)",False,0,False,False,False,,
+4,last_earned_at,timestamp with time zone,True,,False,False,False,,
+5,updated_at,timestamp with time zone,False,now(),False,False,False,,
+6,created_at,timestamp with time zone,False,now(),False,False,False,,

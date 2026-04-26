@@ -1,0 +1,2 @@
+schema,table,constraint_name,column,referenced_schema,referenced_table,referenced_column,on_update,on_delete
+public,rebate_accruals,fk_rebate_accruals_settlement,settlement_id,public,rebate_settlements,id,NO ACTION,NO ACTION

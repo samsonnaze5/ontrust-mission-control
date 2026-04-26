@@ -1,0 +1,11 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,user_id,uuid,False,,False,False,True,public.users.id,
+3,from_role_id,uuid,False,,False,False,True,public.roles.id,
+4,to_role_id,uuid,False,,False,False,True,public.roles.id,
+5,requested_by,uuid,True,,False,False,True,public.users.id,
+6,approved_by,uuid,True,,False,False,True,public.users.id,
+7,approved_at,timestamp with time zone,True,,False,False,False,,
+8,reason,text,True,,False,False,False,,
+9,notes,text,True,,False,False,False,,
+10,created_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,

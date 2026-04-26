@@ -1,0 +1,10 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,integer,False,nextval('banks_id_seq'::regclass),True,False,False,,
+2,acronym,character varying(50),False,,False,True,False,,
+3,logo_url,character varying(500),True,,False,False,False,,
+4,is_active,boolean,False,true,False,False,False,,
+5,created_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+6,updated_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+7,created_by_id,uuid,True,,False,False,False,,
+8,updated_by_id,uuid,True,,False,False,False,,
+9,country_code,character varying(2),False,'TH'::character varying,False,False,False,,

@@ -1,0 +1,13 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,transaction_id,character varying(100),False,,False,True,False,,
+3,user_id,uuid,False,,False,False,False,,
+4,wallet_id,uuid,False,,False,False,False,,
+5,total_amount,"numeric(20,6)",False,,False,False,False,,
+6,accrual_count,integer,False,,False,False,False,,
+7,balance_before,"numeric(20,6)",False,,False,False,False,,
+8,balance_after,"numeric(20,6)",False,,False,False,False,,
+9,status,character varying(20),False,'PENDING'::character varying,False,False,False,,
+10,wallet_transaction_id,character varying(100),True,,False,False,False,,
+11,processed_at,timestamp with time zone,True,,False,False,False,,
+12,created_at,timestamp with time zone,False,now(),False,False,False,,

@@ -1,0 +1,10 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,user_id,uuid,False,,False,False,True,public.users.id,
+3,wallet_type,character varying(20),False,,False,False,False,,
+4,wallet_code,character varying(100),False,,False,True,False,,Human-readable code e.g. CID-00123-DEFAULT or CID-00123-IB-WALLET
+5,balance,"numeric(20,6)",False,0.000000,False,False,False,,
+6,status,character varying(20),False,'ACTIVE'::character varying,False,False,False,,
+7,created_at,timestamp with time zone,False,now(),False,False,False,,
+8,updated_at,timestamp with time zone,False,now(),False,False,False,,
+9,ledger_account_id,character varying(100),True,,False,False,False,,

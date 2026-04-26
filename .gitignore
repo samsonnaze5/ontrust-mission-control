@@ -1,0 +1,46 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# BMAD method output (do not commit)
+_bmad/
+_bmad-output/
+
+# Claude Code local overrides (personal, do not share)
+.claude/settings.local.json
+
+# Python (scripts/extract_schemas.py)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+
+# Task runner cache
+.task/
+
+# OS
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+.~lock.*
+*.iml
+
+# Logs / temp / backup
+*.log
+logs/
+tmp/
+.tmp/
+*.bak

@@ -1,0 +1,60 @@
+path,type,scope,reason
+node_modules,folder,any,Node.js dependencies — ขนาดใหญ่และไม่ใช่ source code
+vendor,folder,any,Go vendor directory — dependencies ที่ download มา
+dist,folder,any,Build output — generated files
+build,folder,any,Build output — generated files
+out,folder,any,Build output ทั่วไป
+bin,folder,any,Compiled binaries (Go projects ใส่ binary หลัง build)
+.next,folder,any,Next.js build cache
+.nuxt,folder,any,Nuxt build cache
+output,folder,any,Output directory — generated files
+outputs,folder,any,Output directory — generated files
+git-craft/outputs,folder,any,git-craft tool output
+_aegis-output,folder,any,Aegis tool output
+_generator,folder,any,Code generator output
+*.exe,file,any,Compiled Windows binaries
+*.exe~,file,any,Windows binary backups
+*.dll,file,any,Compiled Windows libraries
+*.so,file,any,Compiled Linux shared libraries
+*.dylib,file,any,Compiled macOS shared libraries
+debug,file,any,Go debug binary
+__debug_bin*,file,any,Go debug binary patterns
+*.test,file,any,Go test binaries
+*.out,file,any,Go test / coverage / profile output files
+*.prof,file,any,Go profile files
+coverage,folder,any,Test coverage report directory
+coverage.out,file,any,Go coverage output
+test.db,file,any,Test database files
+.idea,folder,any,JetBrains IDE config
+.vscode,folder,any,VS Code workspace config
+.history,folder,any,Local History plugin storage
+*.swp,file,any,Vim swap files
+*.swo,file,any,Vim swap files
+*~,file,any,Editor backup files (Vim / Emacs)
+.DS_Store,file,any,macOS metadata files
+Thumbs.db,file,any,Windows thumbnail cache
+.env,file,any,Environment variable file (อาจมี secrets)
+.env.*,file,any,Environment variant files (.env.local / .env.production ฯลฯ)
+http-client.env.json,file,any,JetBrains HTTP client environment file (อาจมี secrets)
+.cache,folder,any,Cache files ของเครื่องมือต่างๆ
+.go_cache,folder,any,Go module cache
+.go-tmp,folder,any,Go temporary files
+.go,folder,any,Go workspace cache
+tmp,folder,any,Temporary files
+.git,folder,any,Git internals — ใช้คำสั่ง git แทน
+.claude,folder,any,Claude Code workspace config
+.agent,folder,any,Agent workspace files
+.agents,folder,any,Agent workspace files
+.feature-dev,folder,any,Feature-dev tool workspace
+.feature-dev-archive-*,folder,any,Feature-dev archived sessions
+*.log,file,any,Log files
+*.lock,file,any,Lock files (yarn.lock ฯลฯ)
+go.sum,file,any,Go module checksum — ไม่จำเป็นสำหรับการอ่าน logic
+go.work,file,any,Go workspace file
+go.work.sum,file,any,Go workspace checksum
+docs,folder,any,Auto-generated documentation directory
+xxx.md,file,any,Scratch markdown file
+xxx.txt,file,any,Scratch text file
+git-change-list.md,file,any,Auto-generated git change list
+requirement.md,file,any,Per-feature requirement scratch file
+numeric-precision-standard.md,file,any,Internal numeric precision doc

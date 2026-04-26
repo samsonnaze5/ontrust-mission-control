@@ -1,0 +1,28 @@
+version: '3'
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list
+
+  schemas:install:
+    desc: Install Python dependencies for the schema extractor
+    cmds:
+      - pip3 install -r scripts/requirements.txt
+
+  schemas:extract:
+    desc: Extract DB schemas → artifacts/schemas/ (reads .env at repo root)
+    cmds:
+      - python3 scripts/extract_schemas.py
+
+  schemas:clean:
+    desc: Remove generated artifacts/schemas/
+    cmds:
+      - rm -rf artifacts/schemas
+
+  schemas:refresh:
+    desc: Clean then extract — fresh run, drops stale per-table CSVs
+    cmds:
+      - task: schemas:clean
+      - task: schemas:extract

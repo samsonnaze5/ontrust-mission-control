@@ -1,0 +1,97 @@
+env_name,group,description,projects
+STAGE,app,"runtime stage (development | dev | production | prod) — ใช้แยกพฤติกรรม dev/prod ของทุก service",onetrust-mt5-processor;onetrust-financial-service;onetrust-archived;onetrust-client-portal-api;onetrust-mt5-proxy-api
+PORT,server,"HTTP listen port ของ MT5 proxy API (default 8083)",onetrust-mt5-proxy-api
+DATABASE_HOST,database_main,"host ของ Postgres หลัก (crm_central) — master data / settings / users กลาง",onetrust-mt5-processor;onetrust-financial-service;onetrust-archived;onetrust-client-portal-api
+DATABASE_PORT,database_main,"port ของ Postgres หลัก (crm_central)",onetrust-mt5-processor;onetrust-financial-service;onetrust-archived;onetrust-client-portal-api
+DATABASE_USERNAME,database_main,"username ของ Postgres หลัก (crm_central)",onetrust-mt5-processor;onetrust-financial-service;onetrust-archived;onetrust-client-portal-api
+DATABASE_PASSWORD,database_main,"password ของ Postgres หลัก (crm_central)",onetrust-mt5-processor;onetrust-financial-service;onetrust-archived;onetrust-client-portal-api
+DATABASE_DATABASE,database_main,"database name ของ Postgres หลัก (crm_central)",onetrust-mt5-processor;onetrust-financial-service;onetrust-archived;onetrust-client-portal-api
+DATABASE_TRADING_BALANCE_HOST,database_trading_balance,"host ของ Postgres balance — เก็บประวัติ Trading Account Equity",onetrust-mt5-processor;onetrust-archived
+DATABASE_TRADING_BALANCE_PORT,database_trading_balance,"port ของ Postgres balance",onetrust-mt5-processor;onetrust-archived
+DATABASE_TRADING_BALANCE_USERNAME,database_trading_balance,"username ของ Postgres balance",onetrust-mt5-processor;onetrust-archived
+DATABASE_TRADING_BALANCE_PASSWORD,database_trading_balance,"password ของ Postgres balance",onetrust-mt5-processor;onetrust-archived
+DATABASE_TRADING_BALANCE_DATABASE,database_trading_balance,"database name ของ Postgres balance",onetrust-mt5-processor;onetrust-archived
+DATABASE_TRADING_IN_HOST,database_trading_in,"host ของ Postgres crm_trading_open — เก็บเฉพาะ deal in (เปิด position)",onetrust-mt5-processor;onetrust-archived
+DATABASE_TRADING_IN_PORT,database_trading_in,"port ของ Postgres crm_trading_open",onetrust-mt5-processor;onetrust-archived
+DATABASE_TRADING_IN_USERNAME,database_trading_in,"username ของ Postgres crm_trading_open",onetrust-mt5-processor;onetrust-archived
+DATABASE_TRADING_IN_PASSWORD,database_trading_in,"password ของ Postgres crm_trading_open",onetrust-mt5-processor;onetrust-archived
+DATABASE_TRADING_IN_DATABASE,database_trading_in,"database name ของ Postgres crm_trading_open",onetrust-mt5-processor;onetrust-archived
+DATABASE_TRADING_OUT_HOST,database_trading_out,"host ของ Postgres crm_trading_closed — เก็บเฉพาะ deal out (ปิด position)",onetrust-mt5-processor;onetrust-financial-service;onetrust-archived
+DATABASE_TRADING_OUT_PORT,database_trading_out,"port ของ Postgres crm_trading_closed",onetrust-mt5-processor;onetrust-financial-service;onetrust-archived
+DATABASE_TRADING_OUT_USERNAME,database_trading_out,"username ของ Postgres crm_trading_closed",onetrust-mt5-processor;onetrust-financial-service;onetrust-archived
+DATABASE_TRADING_OUT_PASSWORD,database_trading_out,"password ของ Postgres crm_trading_closed",onetrust-mt5-processor;onetrust-financial-service;onetrust-archived
+DATABASE_TRADING_OUT_DATABASE,database_trading_out,"database name ของ Postgres crm_trading_closed",onetrust-mt5-processor;onetrust-financial-service;onetrust-archived
+DATABASE_POSITION_COMPLETE_HOST,database_position_complete,"host ของ Postgres crm_trading_complete — position ที่จับคู่ deal in/out แล้ว 100%",onetrust-mt5-processor;onetrust-archived
+DATABASE_POSITION_COMPLETE_PORT,database_position_complete,"port ของ Postgres crm_trading_complete",onetrust-mt5-processor;onetrust-archived
+DATABASE_POSITION_COMPLETE_USERNAME,database_position_complete,"username ของ Postgres crm_trading_complete",onetrust-mt5-processor;onetrust-archived
+DATABASE_POSITION_COMPLETE_PASSWORD,database_position_complete,"password ของ Postgres crm_trading_complete",onetrust-mt5-processor;onetrust-archived
+DATABASE_POSITION_COMPLETE_DATABASE,database_position_complete,"database name ของ Postgres crm_trading_complete",onetrust-mt5-processor;onetrust-archived
+DATABASE_FINANCIAL_HOST,database_financial,"host ของ Postgres crm_financial — rebate distributions/accruals/settlements",onetrust-financial-service;onetrust-archived
+DATABASE_FINANCIAL_PORT,database_financial,"port ของ Postgres crm_financial",onetrust-financial-service;onetrust-archived
+DATABASE_FINANCIAL_USERNAME,database_financial,"username ของ Postgres crm_financial",onetrust-financial-service;onetrust-archived
+DATABASE_FINANCIAL_PASSWORD,database_financial,"password ของ Postgres crm_financial",onetrust-financial-service;onetrust-archived
+DATABASE_FINANCIAL_DATABASE,database_financial,"database name ของ Postgres crm_financial",onetrust-financial-service;onetrust-archived
+KAFKA_BROKERS,kafka,"รายการ broker (host:port คั่น comma) ของ Kafka cluster",onetrust-mt5-processor;onetrust-financial-service;onetrust-archived;onetrust-client-portal-api
+EXTERNAL_NETWORK_NAME,docker_network,"ชื่อ docker network ภายนอกที่ compose จะเข้า join (สำหรับ task docker:up:shared)",onetrust-mt5-processor;onetrust-archived
+EXTERNAL_NETWORK_EXTERNAL,docker_network,"flag บอกว่า network นั้นถูกสร้างจากภายนอก (true/false)",onetrust-mt5-processor;onetrust-archived
+CLICKHOUSE_ENABLE,clickhouse_main,"เปิด/ปิด การเชื่อม ClickHouse หลัก (top-level)",onetrust-archived;onetrust-client-portal-api
+CLICKHOUSE_HOST,clickhouse_main,"host:port ของ ClickHouse หลัก (top-level) — legacy ใน archiver, ใช้งานจริงใน client-portal-api",onetrust-archived;onetrust-client-portal-api
+CLICKHOUSE_DATABASE,clickhouse_main,"database name ของ ClickHouse หลัก",onetrust-archived;onetrust-client-portal-api
+CLICKHOUSE_USERNAME,clickhouse_main,"username ของ ClickHouse หลัก",onetrust-archived;onetrust-client-portal-api
+CLICKHOUSE_PASSWORD,clickhouse_main,"password ของ ClickHouse หลัก",onetrust-archived;onetrust-client-portal-api
+CLICKHOUSE_TLS,clickhouse_main,"เปิด TLS ตอนเชื่อม ClickHouse หลัก",onetrust-client-portal-api
+CLICKHOUSE_CLIENT_ENABLE,clickhouse_client,"เปิด/ปิด ClickHouse ฝั่ง trading analytics (client)",onetrust-archived
+CLICKHOUSE_CLIENT_HOST,clickhouse_client,"host:port ของ ClickHouse ฝั่ง trading analytics",onetrust-archived
+CLICKHOUSE_CLIENT_DATABASE,clickhouse_client,"database name ของ ClickHouse ฝั่ง trading analytics",onetrust-archived
+CLICKHOUSE_CLIENT_USERNAME,clickhouse_client,"username ของ ClickHouse ฝั่ง trading analytics",onetrust-archived
+CLICKHOUSE_CLIENT_PASSWORD,clickhouse_client,"password ของ ClickHouse ฝั่ง trading analytics",onetrust-archived
+CLICKHOUSE_CLIENT_TLS,clickhouse_client,"เปิด TLS ตอนเชื่อม ClickHouse ฝั่ง trading analytics",onetrust-archived
+CLICKHOUSE_IB_ENABLE,clickhouse_ib,"เปิด/ปิด ClickHouse ฝั่ง IB/financial analytics",onetrust-archived
+CLICKHOUSE_IB_HOST,clickhouse_ib,"host:port ของ ClickHouse ฝั่ง IB/financial analytics",onetrust-archived
+CLICKHOUSE_IB_DATABASE,clickhouse_ib,"database name ของ ClickHouse ฝั่ง IB/financial analytics",onetrust-archived
+CLICKHOUSE_IB_USERNAME,clickhouse_ib,"username ของ ClickHouse ฝั่ง IB/financial analytics",onetrust-archived
+CLICKHOUSE_IB_PASSWORD,clickhouse_ib,"password ของ ClickHouse ฝั่ง IB/financial analytics",onetrust-archived
+CLICKHOUSE_IB_TLS,clickhouse_ib,"เปิด TLS ตอนเชื่อม ClickHouse ฝั่ง IB/financial analytics",onetrust-archived
+AWS_ACCESS_KEY,aws,"AWS access key สำหรับ S3 (อัป/ดาวน์โหลดเอกสาร KYC ฯลฯ)",onetrust-client-portal-api
+AWS_SECRET_KEY,aws,"AWS secret key คู่กับ AWS_ACCESS_KEY",onetrust-client-portal-api
+AWS_S3_BUCKET_NAME,aws,"ชื่อ S3 bucket สำหรับเก็บไฟล์",onetrust-client-portal-api
+AWS_S3_BUCKET_PATH,aws,"path prefix ภายใน bucket",onetrust-client-portal-api
+AWS_S3_REGION,aws,"AWS region ของ S3 bucket (default ap-southeast-1)",onetrust-client-portal-api
+JWT_SECRET,jwt,"secret สำหรับ sign/verify JWT ของ Client/Admin/Partner API",onetrust-client-portal-api
+GMAIL_CLIENT_ID,gmail,"OAuth2 client_id สำหรับ Gmail API (ส่งอีเมล verify/notify)",onetrust-client-portal-api
+GMAIL_CLIENT_SECRET,gmail,"OAuth2 client_secret คู่กับ GMAIL_CLIENT_ID",onetrust-client-portal-api
+GMAIL_REFRESH_TOKEN,gmail,"OAuth2 refresh token ของ Gmail API",onetrust-client-portal-api
+EMAIL_SENDER_NAME,email,"ชื่อผู้ส่งที่จะแสดงใน From ของอีเมล",onetrust-client-portal-api
+EMAIL_SENDER_EMAIL,email,"อีเมลผู้ส่งที่จะแสดงใน From",onetrust-client-portal-api
+FRONTEND_BASE_URL,frontend,"base URL ของ frontend สำหรับสร้างลิงก์ verify/redirect",onetrust-client-portal-api
+FRONTEND_REGISTER_PATH,frontend,"path สำหรับลิงก์สมัคร (default register)",onetrust-client-portal-api
+PSP_MOCK,psp,"true = ใช้ PSP mock (ข้าม happypay/2c2p จริง)",onetrust-client-portal-api
+PSP_HAPPYPAY_ENABLE,psp_happypay,"เปิด/ปิด PSP provider HappyPay",onetrust-client-portal-api
+PSP_HAPPYPAY_API_KEY,psp_happypay,"API key ของ HappyPay (จำเป็นเมื่อ enable=true และ PSP_MOCK=false)",onetrust-client-portal-api
+PSP_ONE_TWO_PAY_ENABLE,psp_one_two_pay,"เปิด/ปิด PSP provider 2C2P (One-Two-Pay)",onetrust-client-portal-api
+PSP_ONE_TWO_PAY_API_KEY,psp_one_two_pay,"API key ของ 2C2P (จำเป็นเมื่อ enable=true และ PSP_MOCK=false)",onetrust-client-portal-api
+PSP_ONE_TWO_PAY_BASE_URL,psp_one_two_pay,"base URL ของ 2C2P (sandbox/production)",onetrust-client-portal-api
+PSP_ONE_TWO_PAY_PARTNER_CODE,psp_one_two_pay,"partner code ที่ 2C2P ออกให้",onetrust-client-portal-api
+ONE_TWO_PAY_API_KEY,psp_one_two_pay,"alias เก่าของ PSP_ONE_TWO_PAY_API_KEY (ยังถูก set ไว้ใน .env.example/.env แต่ canonical คือ PSP_*)",onetrust-client-portal-api
+SERVICE_DEPOSIT_IDEMPOTENCY_TTL,service_deposit,"TTL สำหรับ idempotency key ของการ deposit",onetrust-client-portal-api
+SERVICE_DEPOSIT_TRANSACTION_EXPIRY_DURATION,service_deposit,"ระยะเวลาที่ deposit transaction หมดอายุ",onetrust-client-portal-api
+STORAGE_DRIVER,storage,"driver สำหรับ file storage (mock | s3)",onetrust-client-portal-api
+STORAGE_PRESIGNED_URL_EXPIRATION,storage,"อายุของ presigned URL (1s–168h, default 1h)",onetrust-client-portal-api
+STORAGE_TIMEOUT,storage,"timeout ของ operation ฝั่ง storage",onetrust-client-portal-api
+SERVICE_AUTH_ACCESS_TOKEN_TTL,service_auth,"TTL ของ access token ฝั่ง client",onetrust-client-portal-api
+SERVICE_AUTH_REFRESH_TOKEN_TTL,service_auth,"TTL ของ refresh token ฝั่ง client",onetrust-client-portal-api
+SERVICE_ADMIN_AUTH_ACCESS_TOKEN_TTL,service_auth,"TTL ของ access token ฝั่ง admin",onetrust-client-portal-api
+SERVICE_ADMIN_AUTH_REFRESH_TOKEN_TTL,service_auth,"TTL ของ refresh token ฝั่ง admin",onetrust-client-portal-api
+SONAR_TOKEN,sonar,"token สำหรับรัน SonarQube scan ในเครื่อง",onetrust-client-portal-api
+DEAL_RECEIVER_API_KEY,deal_receiver,"API key สำหรับ webhook deal-receiver (รับ deal เข้ามา)",onetrust-client-portal-api
+MT5_PROXY_LIVE_BASE_URL,mt5_proxy_live,"base URL ของ mt5-proxy-api ฝั่ง live",onetrust-client-portal-api
+MT5_PROXY_LIVE_API_KEY,mt5_proxy_live,"X-API-Key สำหรับเรียก mt5-proxy-api ฝั่ง live",onetrust-client-portal-api
+MT5_PROXY_DEMO_BASE_URL,mt5_proxy_demo,"base URL ของ mt5-proxy-api ฝั่ง demo",onetrust-client-portal-api
+MT5_PROXY_DEMO_API_KEY,mt5_proxy_demo,"X-API-Key สำหรับเรียก mt5-proxy-api ฝั่ง demo",onetrust-client-portal-api
+MT5_API_KEY,mt5_server,"API key ของ mt5-proxy-api เอง (ใช้ตรวจ X-API-Key จาก client)",onetrust-mt5-proxy-api
+MT5_BASE_URL,mt5_server,"base URL ของ MT5 Manager (เช่น https://host:443)",onetrust-mt5-proxy-api
+MT5_LOGIN,mt5_server,"login ของ MT5 Manager",onetrust-mt5-proxy-api
+MT5_PASSWORD,mt5_server,"password ของ MT5 Manager",onetrust-mt5-proxy-api
+MT5_VERSION,mt5_server,"build version ของ MT5 Manager (เช่น 5640)",onetrust-mt5-proxy-api
+MT5_TLS_INSECURE,mt5_server,"ข้าม TLS verify ตอนเชื่อม MT5 Manager (default true)",onetrust-mt5-proxy-api
+MT5_REQUEST_TIMEOUT,mt5_server,"timeout ต่อ request ที่ส่งไป MT5 Manager (default 30s)",onetrust-mt5-proxy-api

@@ -1,0 +1,5 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,role_id,uuid,False,,False,False,True,public.roles.id,
+3,permission_id,uuid,False,,False,False,True,public.permissions.id,
+4,created_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,

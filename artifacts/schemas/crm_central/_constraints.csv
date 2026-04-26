@@ -1,0 +1,14 @@
+schema,table,constraint_name,type,definition
+public,downline_filter_presets,uq_downline_filter_presets_user_name,UNIQUE,"UNIQUE (user_id, name)"
+public,ib_upgrade_history,chk_reviewer_not_requester,CHECK,CHECK (((reviewed_by IS NULL) OR (reviewed_by <> requested_by)))
+public,ledger_entries,chk_ledger_entries_amount,CHECK,CHECK ((amount >= (0)::numeric))
+public,modules,ui_modules_code,UNIQUE,UNIQUE (code)
+public,mt5_account_transactions,chk_mt5_txn_amount,CHECK,CHECK ((amount_usd >= (0)::numeric))
+public,permissions,ui_permissions_code,UNIQUE,UNIQUE (code)
+public,role_module_access,ui_role_module_access_name,UNIQUE,"UNIQUE (role_id, module_id)"
+public,roles,ui_roles_code,UNIQUE,UNIQUE (code)
+public,roles,ui_roles_name,UNIQUE,UNIQUE (name)
+public,transactions,chk_transactions_amount_usd,CHECK,CHECK ((amount_usd >= (0)::numeric))
+public,users,users_ib_code_check,CHECK,CHECK ((length((ib_code)::text) = 8))
+public,users,users_ib_code_key,UNIQUE,UNIQUE (ib_code)
+public,wallets,chk_wallets_balance_non_negative,CHECK,CHECK ((balance >= (0)::numeric))

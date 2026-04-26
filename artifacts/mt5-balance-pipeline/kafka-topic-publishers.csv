@@ -1,0 +1,4 @@
+topic,publisher_owner,publisher_source,status,description,message_sample
+mt5.account.balance.incoming,external,debezium จาก postgresql ต้นทางจาก MT5 Database server ส่งมาผ่านทาง Kafka,live,stream snapshot ของ account balance จาก MT5 ภายนอกเข้ามาผ่าน debezium CDC,messages/mt5.account.balance.incoming.jsonl
+mt5-processor.account.balance.snapshot.created,onetrust-mt5-processor,debezium ตอน insert จาก postgresql table mt5_account_balance_snapshots [db:balance],live,debezium อ่าน insert จาก mt5_account_balance_snapshots ใน balance DB — snapshot-sync + archiver consume,messages/mt5-processor.account.balance.snapshot.created.jsonl
+mt5.account.balance.snapshot.clean,onetrust-archived,publish จาก worker mt5-account-balance-snapshot-cleanup-watcher มันจะทำงานวันละ 1 ครั้งตอน 00:00 เพื่อลบข้อมูลออก แล้วเริ่มใหม่,live,trigger ให้ snapshot-cleaner ลบ row หลัง archive แล้ว — worker ทำงานวันละ 1 ครั้งตอน 00:00,messages/mt5.account.balance.snapshot.clean.jsonl

@@ -1,0 +1,30 @@
+service,topic,role,consumer_group,notes
+onetrust-mt5-processor,mt5.deal.in.received,consume,mt5-deals-in-ingestor,รับมาจาก MT5 ภายนอก (debezium จาก MT5 Database server) — เป็นข้อมูล deal in (เปิด position)
+onetrust-mt5-processor,mt5-processor.deal.in.created,produce,,publish ผ่าน debezium จาก mt5_deals_in [db:crm_trading_open] หลัง ingestor บันทึก — ไม่ได้ publish จาก Go binary โดยตรง
+onetrust-mt5-processor,mt5.deal.out.received,consume,mt5-deals-out-ingestor,รับมาจาก MT5 ภายนอก (debezium จาก MT5 Database server) — เป็นข้อมูล deal out (ปิด position)
+onetrust-mt5-processor,mt5-processor.deal.out.created,produce,,publish ผ่าน debezium จาก mt5_deals_out [db:crm_trading_closed] หลัง ingestor บันทึก — ไม่ได้ publish จาก Go binary โดยตรง
+onetrust-mt5-processor,mt5-processor.deal.out.created,consume,mt5-position-detector,position-detector ภายใน service เดียวกัน consume เพื่อ match deal in/out แล้วสร้าง position ที่ปิดสมบูรณ์
+onetrust-mt5-processor,mt5-processor.position.created,produce,,publish ผ่าน debezium จาก mt5_position_completes [db:crm_trading_complete] หลัง position-detector บันทึก
+onetrust-financial-service,mt5-processor.deal.out.created,consume,financial-rebate-calculator,onetrust-mt5-processor publish ให้ (ผ่าน debezium จาก mt5_deals_out) — เป็น trigger ให้คำนวณ rebate
+onetrust-financial-service,financial.rebate.calculated,produce,,publish จาก rebate-calculator หลังคำนวณ rebate ของแต่ละ deal เสร็จ
+onetrust-financial-service,financial.rebate.calculated,consume,financial-rebate-accrual-builder,accrual-builder ภายใน service เดียวกัน consume เพื่อสร้าง accrual rows ใน DB
+onetrust-financial-service,financial.rebate.accrual.created,produce,,publish ผ่าน debezium จาก rebate_accruals [db:crm_financial] หลัง accrual-builder บันทึก
+onetrust-financial-service,financial.rebate.settlement.created,produce,,publish ผ่าน debezium จาก rebate_settlements [db:crm_financial] — เป็น trigger ของ wallet-credit downstream pipeline
+onetrust-financial-service,financial.rebate.settlement.created,consume,financial-wallet-transaction-writer,wallet-transaction-writer ภายใน service เดียวกัน consume เพื่อ INSERT wallet_transactions (REBATE_CREDIT)
+onetrust-financial-service,financial.wallet.transaction.created,produce,,publish ผ่าน debezium จาก wallet_transactions [db:crm_financial]
+onetrust-financial-service,financial.wallet.transaction.created,consume,financial-rebate-earning-calculator,earning-calculator ภายใน service เดียวกัน consume เพื่อ update earning ของ IB
+onetrust-archived,mt5-processor.deal.in.created,consume,mt5-deals-in-archived,onetrust-mt5-processor publish ให้ (ผ่าน debezium จาก mt5_deals_in) — archive ลง ClickHouse
+onetrust-archived,mt5-processor.deal.out.created,consume,mt5-deals-out-archived,onetrust-mt5-processor publish ให้ (ผ่าน debezium จาก mt5_deals_out) — archive ลง ClickHouse
+onetrust-archived,mt5-processor.position.created,consume,mt5-position-archived,onetrust-mt5-processor publish ให้ (ผ่าน debezium จาก mt5_position_completes) — archive ลง ClickHouse
+onetrust-archived,financial.rebate.calculated,consume,financial-rebate-distribution-archived,onetrust-financial-service publish ให้ (จาก rebate-calculator) — archive ลง ClickHouse
+onetrust-archived,financial.rebate.accrual.created,consume,financial-rebate-accrual-archived,onetrust-financial-service publish ให้ (ผ่าน debezium จาก rebate_accruals) — archive ลง ClickHouse
+onetrust-archived,financial.rebate.settlement.created,consume,financial-rebate-settlement-archived,onetrust-financial-service publish ให้ (ผ่าน debezium จาก rebate_settlements) — archive ลง ClickHouse
+onetrust-archived,financial.wallet.transaction.created,consume,financial-wallet-transaction-archived,onetrust-financial-service publish ให้ (ผ่าน debezium จาก wallet_transactions) — archive ลง ClickHouse
+onetrust-archived,paid.clean,produce,,publish จาก worker rebate-paid-cleanup-watcher (interval ~15 นาที) — trigger ให้ 7 cleaner ลบ row ที่ archive แล้ว
+onetrust-archived,paid.clean,consume,mt5-deals-in-cleaner,trigger ให้ลบ row ใน mt5_deals_in หลัง archive ลง ClickHouse แล้ว
+onetrust-archived,paid.clean,consume,mt5-deals-out-cleaner,trigger ให้ลบ row ใน mt5_deals_out หลัง archive ลง ClickHouse แล้ว
+onetrust-archived,paid.clean,consume,mt5-position-cleaner,trigger ให้ลบ row ใน mt5_position_completes หลัง archive ลง ClickHouse แล้ว
+onetrust-archived,paid.clean,consume,mt5-rebate-distributions-cleaner,trigger ให้ลบ row ใน rebate_distributions หลัง archive ลง ClickHouse แล้ว
+onetrust-archived,paid.clean,consume,financial-rebate-accruals-cleaner,trigger ให้ลบ row ใน rebate_accruals หลัง archive ลง ClickHouse แล้ว
+onetrust-archived,paid.clean,consume,financial-rebate-settlements-cleaner,trigger ให้ลบ row ใน rebate_settlements หลัง archive ลง ClickHouse แล้ว
+onetrust-archived,paid.clean,consume,financial-wallet-transactions-cleaner,trigger ให้ลบ row ใน wallet_transactions หลัง archive ลง ClickHouse แล้ว

@@ -1,0 +1,12 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,psp_provider_id,uuid,False,,False,False,True,public.psp_providers.id,
+3,method_type,character varying(50),False,,False,False,False,,
+4,min_amount_usd,"numeric(20,6)",False,,False,False,False,,
+5,max_amount_usd,"numeric(20,6)",False,,False,False,False,,
+6,is_active,boolean,False,true,False,False,False,,
+7,created_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+8,updated_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+9,fee_rate,"numeric(20,8)",False,0,False,False,False,,PSP fee as decimal (0.03 = 3%). Used in offer_rate formula: (bot_rate + broker_markup) / (1 - fee_rate)
+10,transaction_type,character varying(50),False,'DEPOSIT'::character varying,False,False,False,,"Financial action type (DEPOSIT, WITHDRAW)"
+11,logo_url,character varying(255),True,,False,False,False,,URL to the payment method logo

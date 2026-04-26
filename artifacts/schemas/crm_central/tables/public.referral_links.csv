@@ -1,0 +1,13 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,user_id,uuid,False,,False,False,True,public.users.id,
+3,referral_code,character varying(50),False,,False,False,False,,
+4,label,character varying(255),True,,False,False,False,,
+5,is_active,boolean,False,true,False,False,False,,
+6,total_clicks,integer,False,0,False,False,False,,
+7,total_signups,integer,False,0,False,False,False,,
+8,created_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+9,updated_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+10,target_page,character varying(100),False,'REGISTER'::character varying,False,False,False,,"Target page for referral link (e.g. REGISTER, LOGIN, LANDING)"
+11,language,character varying(50),False,'TH'::character varying,False,False,False,,"Language code for referral link (e.g. EN, TH, ZH)"
+12,platform,character varying(50),False,'ALL'::character varying,False,False,False,,"Target platform for referral link (e.g. ALL, WEB, MOBILE)"

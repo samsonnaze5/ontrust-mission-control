@@ -1,0 +1,9 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,name,character varying(100),False,,False,True,False,,
+3,code,character varying(50),False,,False,True,False,,
+4,is_default,boolean,False,false,False,False,False,,
+5,is_active,boolean,False,true,False,False,False,,
+6,sort_order,integer,False,0,False,False,False,,
+7,created_at,timestamp with time zone,False,now(),False,False,False,,
+8,updated_at,timestamp with time zone,False,now(),False,False,False,,

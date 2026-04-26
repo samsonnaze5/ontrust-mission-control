@@ -1,0 +1,68 @@
+schema,table,kind,row_count_estimate,size_bytes,comment
+public,audit_log,TABLE,112,114688,
+public,banks,TABLE,-1,81920,Centralized list of banks in Thailand.
+public,broker_markups,TABLE,-1,40960,Broker markup configuration per currency. Added to bot_rate before calculating offer_rate.
+public,business_units,TABLE,-1,16384,
+public,currency_rates,TABLE,-1,65536,BOT reference exchange rates. Updated by external cronjob. Used to calculate bot_rate for deposit requests.
+public,downline_filter_presets,TABLE,-1,32768,
+public,goose_db_version,TABLE,36,24576,
+public,ib_upgrade_history,TABLE,-1,98304,"Tracks user role upgrades (Trader→IB, IB→MIB, etc.) for audit trail."
+public,ledger_accounts,TABLE,-1,57344,
+public,ledger_chart_of_accounts,TABLE,-1,24576,
+public,ledger_entries,TABLE,-1,32768,
+public,modules,TABLE,-1,49152,
+public,mt5_account_equity_snapshots,TABLE,-1,32768,
+public,mt5_account_groups,TABLE,-1,49152,
+public,mt5_account_transactions,TABLE,-1,81920,"All Trading Account operations: PSP deposits/withdrawals to MT5, trades (profit/loss/spread/commission/swap), internal transfers involving MT5, liquidations, rebalances."
+public,mt5_accounts,TABLE,-1,65536,
+public,mt5_deals,TABLE,2,172032,
+public,mt5_deals_in,TABLE,-1,49152,
+public,mt5_deals_out,TABLE,-1,49152,
+public,mt5_deals_out_rebates,TABLE,-1,73728,
+public,mt5_demo_account_groups,TABLE,-1,49152,
+public,mt5_demo_accounts,TABLE,-1,8192,
+public,mt5_position_complete_details,TABLE,-1,98304,
+public,mt5_position_completes,TABLE,-1,81920,
+public,mt5_positions,TABLE,-1,49152,
+public,mt5_sync_batches,TABLE,-1,24576,
+public,outbox_events,TABLE,-1,24576,
+public,permissions,TABLE,-1,98304,
+public,psp_bank_mappings,TABLE,-1,57344,Mapping between banks and specific codes required by PSP providers.
+public,psp_provider_methods,TABLE,4,40960,
+public,psp_providers,TABLE,-1,65536,PSP provider configuration. Stores fee rate used during deposit rate calculation.
+public,rebate_accruals,TABLE,12,155648,Immutable records of rebate accrued per deal per beneficiary level. Status transitions: PENDING → SETTLED.
+public,rebate_distributions,TABLE,12,204800,Immutable ledger of rebate distributions per trade per beneficiary level.
+public,rebate_earnings,TABLE,0,49152,"Running total of lifetime rebate earnings per IB user. Only increments, never decreases."
+public,rebate_ledger,TABLE,-1,98304,Immutable rebate transaction log. Linked to wallet_transactions via transaction_id. Never update or delete.
+public,rebate_lines,TABLE,1,204800,Rebate distribution lines. Created eagerly on user registration via referral link. Format: [IB CID|LINK-ID|Executor CID]
+public,rebate_scheme_caps,TABLE,3,49152,Max rebate cap per lot for each account_group × symbol target combination. Used to validate SUM(all_levels) <= max_cap.
+public,rebate_scheme_rates,TABLE,36,98304,Rebate rate matrix. Each row = 1 rate for 1 account_group × 1 symbol target × 1 level. Supports 3-layer resolution: SYMBOL_GROUP → SYMBOL_CUSTOM_GROUP → SYMBOL (most-specific-wins).
+public,rebate_schemes,TABLE,-1,81920,Rebate scheme configurations. Templates have is_template=true and are not linked to any rebate line.
+public,rebate_settlements,TABLE,0,106496,Batch settlement records that group rebate accruals and credit wallets periodically.
+public,referral_link_clicks,TABLE,-1,40960,
+public,referral_links,TABLE,-1,32768,
+public,role_module_access,TABLE,120,73728,
+public,role_permissions,TABLE,102,57344,
+public,role_upgrade_history,TABLE,-1,16384,
+public,roles,TABLE,-1,65536,
+public,symbol_custom_group_items,TABLE,-1,57344,Maps individual MT5 symbols to custom symbol groups. Each symbol belongs to exactly one custom group.
+public,symbol_custom_groups,TABLE,-1,49152,"Custom symbol sub-groups under symbol groups (e.g. Major FX, Minor FX under FX)"
+public,symbol_groups,TABLE,-1,57344,"Default and custom symbol groups for rebate scheme configuration (e.g. FX, Commodities, Indices, Shares, Cryptocurrencies)"
+public,symbols,TABLE,-1,57344,Maps MT5 symbols to default symbol groups. Used during rebate calculation to resolve symbol → group.
+public,temp_mt5_accounts,TABLE,-1,65536,
+public,temp_mt5_deals,TABLE,-1,81920,
+public,temp_mt5_positions,TABLE,-1,81920,
+public,third_party_api_logs,TABLE,-1,40960,
+public,transaction_psp_details,TABLE,-1,32768,Strictly audited child table storing immutable FX rates and PSP specific metadata without relying on JSONB for business logic.
+public,transactions,TABLE,-1,114688,DEPRECATED — migrated to mt5_account_transactions and wallet_transactions. Kept for backward compatibility during transition.
+public,user_permission_overrides,TABLE,-1,16384,
+public,user_profiles,TABLE,-1,49152,
+public,user_roles,TABLE,-1,8192,
+public,user_sessions,TABLE,-1,73728,
+public,users,TABLE,15,385024,
+public,view_closed_orders,VIEW,-1,0,"Platform-agnostic view of closed (realized) trades. Source: mt5_deals, joining IN deals (entry=0) with OUT deals (entry=1/2/3) on the same position_id. Each row represents one realized P&L event. Filter by user_id, ORDER BY close_time DESC for pagination. Partial closes produce separate rows with their own P&L. When cTrader is added, this view will become a UNION ALL across platforms."
+public,view_open_orders,VIEW,-1,0,"Platform-agnostic view of currently open trading positions. Source: mt5_positions. Designed for paginated frontend lists. Filter by user_id, ORDER BY open_time DESC for pagination. When cTrader is added, this view will become a UNION ALL across platforms."
+public,view_transaction_history,VIEW,-1,0,
+public,view_transaction_history_detail,VIEW,-1,0,
+public,wallet_transactions,TABLE,-1,98304,"Unified immutable ledger of all wallet movements: rebate distributions, PSP deposits/withdrawals, internal transfers, manual adjustments. Never update or delete rows."
+public,wallets,TABLE,33,147456,User wallets. Each user gets DEFAULT wallet on registration. IB wallet created on IB/MIB upgrade.

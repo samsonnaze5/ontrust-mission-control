@@ -1,0 +1,7 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,account_id,uuid,False,,False,False,True,public.mt5_accounts.id,
+3,equity,"numeric(18,2)",False,,False,False,False,,
+4,balance,"numeric(18,2)",False,,False,False,False,,
+5,profit,"numeric(18,2)",False,0,False,False,False,,
+6,created_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,

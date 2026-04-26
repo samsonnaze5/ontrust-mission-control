@@ -1,0 +1,2 @@
+schema,table,constraint_name,column,referenced_schema,referenced_table,referenced_column,on_update,on_delete
+public,mt5_account_balance_snapshots,fk_mt5_account_balance_snapshots_account,account_id,public,mt5_accounts,id,NO ACTION,NO ACTION

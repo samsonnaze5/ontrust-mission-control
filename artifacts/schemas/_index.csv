@@ -1,0 +1,9 @@
+database,kind,host,port,database_name,status,table_count,extracted_at,error
+crm_central,postgres,localhost,5432,crm,ok,67,2026-04-26T11:25:17Z,
+balance,postgres,localhost,5432,balance,ok,3,2026-04-26T11:25:17Z,
+crm_trading_open,postgres,localhost,5432,crm_trading_open,ok,2,2026-04-26T11:25:17Z,
+crm_trading_closed,postgres,localhost,5432,crm_trading_closed,ok,2,2026-04-26T11:25:17Z,
+crm_trading_complete,postgres,localhost,5432,crm_trading_complete,ok,2,2026-04-26T11:25:17Z,
+crm_financial,postgres,localhost,5432,crm_financial,ok,6,2026-04-26T11:25:17Z,
+clickhouse_client,clickhouse,localhost,8123,clickhouse_client,error,0,2026-04-26T11:25:17Z,"Error HTTPConnectionPool(host='localhost', port=8123): Max retries exceeded with url: /?query_id=3308334e-ef79-41fb-9b98-90fa38a8b0ed (Caused by NewConnectionError(""HTTPConnection(host='localhost', po"
+clickhouse_ib,clickhouse,localhost,8123,clickhouse_ib,error,0,2026-04-26T11:25:17Z,"Error HTTPConnectionPool(host='localhost', port=8123): Max retries exceeded with url: /?query_id=337f8016-4b98-43fb-a584-8ee49bc7d632 (Caused by NewConnectionError(""HTTPConnection(host='localhost', po"

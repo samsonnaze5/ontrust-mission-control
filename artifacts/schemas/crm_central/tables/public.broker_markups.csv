@@ -1,0 +1,7 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,currency_code,character varying(10),False,,False,True,False,,
+3,markup_rate,"numeric(20,6)",False,0,False,False,False,,Broker markup in payment currency per 1 USD.
+4,created_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+5,updated_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+6,updated_by,uuid,True,,False,False,False,,

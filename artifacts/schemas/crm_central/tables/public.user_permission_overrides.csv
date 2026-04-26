@@ -1,0 +1,12 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,user_id,uuid,False,,False,False,True,public.users.id,
+3,permission_id,uuid,False,,False,False,True,public.permissions.id,
+4,access_level,character varying(20),False,,False,False,False,,
+5,reason,text,True,,False,False,False,,
+6,valid_from,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+7,valid_until,timestamp with time zone,True,,False,False,False,,
+8,created_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+9,updated_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+10,created_by,uuid,True,,False,False,True,public.users.id,
+11,updated_by,uuid,True,,False,False,True,public.users.id,

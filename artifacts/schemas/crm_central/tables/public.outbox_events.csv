@@ -1,0 +1,13 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,aggregate_type,character varying(50),False,,False,False,False,,
+3,aggregate_id,character varying(100),False,,False,False,False,,
+4,event_type,character varying(50),False,,False,False,False,,
+5,payload,jsonb,False,,False,False,False,,
+6,status,character varying(20),False,'PENDING'::character varying,False,False,False,,
+7,retry_count,integer,False,0,False,False,False,,
+8,max_retries,integer,False,5,False,False,False,,
+9,last_error,text,True,,False,False,False,,
+10,published_at,timestamp with time zone,True,,False,False,False,,
+11,created_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
+12,metadata,jsonb,False,'{}'::jsonb,False,False,False,,

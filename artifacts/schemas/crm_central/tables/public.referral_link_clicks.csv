@@ -1,0 +1,7 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,gen_random_uuid(),True,False,False,,
+2,referral_link_id,uuid,False,,False,False,True,public.referral_links.id,
+3,ip_address,character varying(45),True,,False,False,False,,
+4,user_agent,text,True,,False,False,False,,
+5,referer,text,True,,False,False,False,,
+6,clicked_at,timestamp with time zone,False,CURRENT_TIMESTAMP,False,False,False,,
