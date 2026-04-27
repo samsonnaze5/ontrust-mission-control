@@ -1,5 +1,5 @@
 consumer_group,service,entry_point,consume_topic,publish_topic_direct,publish_topic_debezium,description
 mt5-account-balance-snapshot-builder,onetrust-mt5-processor,cmd/mt5-account-balance-snapshot-builder/main.go,mt5.account.balance.incoming,,mt5-processor.account.balance.snapshot.created,รับ snapshot ของ account balance จาก MT5 ภายนอก แล้ว INSERT ลง mt5_account_balance_snapshots [balance]
 mt5-account-balance-snapshot-sync,onetrust-mt5-processor,cmd/mt5-account-balance-snapshot-sync/main.go,mt5-processor.account.balance.snapshot.created,,,sync trading account equity ลง DB เพื่อใช้เป็น history (write-only)
-mt5-account-balance-snapshot-archived,onetrust-archived,cmd/mt5-account-balance-snapshot-archived/main.go,mt5-processor.account.balance.snapshot.created,,,(scaffold) handler แค่ log message ตอนนี้ — ยังไม่ archive ลง ClickHouse จริง
-mt5-account-balance-snapshot-cleaner,onetrust-archived,cmd/mt5-account-balance-snapshot-cleaner/main.go,mt5.account.balance.snapshot.clean,,,DELETE row ใน mt5_account_balance_snapshots หลัง archive แล้ว
+mt5-account-balance-snapshot-archived,onetrust-archiver,cmd/mt5-account-balance-snapshot-archived/main.go,mt5-processor.account.balance.snapshot.created,,,(scaffold) handler แค่ log message ตอนนี้ — ยังไม่ archive ลง ClickHouse จริง
+mt5-account-balance-snapshot-cleaner,onetrust-archiver,cmd/mt5-account-balance-snapshot-cleaner/main.go,mt5.account.balance.snapshot.clean,,,DELETE row ใน mt5_account_balance_snapshots หลัง archive แล้ว

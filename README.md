@@ -36,7 +36,7 @@ A read-only knowledge base that mirrors:
 │ Target repos (writable)          │
 │  ├ onetrust-mt5-processor        │
 │  ├ onetrust-financial-service    │
-│  ├ onetrust-archived             │
+│  ├ onetrust-archiver             │
 │  ├ onetrust-client-portal-api    │
 │  ├ onetrust-mt5-proxy-api        │
 │  └ aeternixth-go-lib             │
