@@ -136,6 +136,8 @@ code at target paths**.
 | Paths to ignore in scans | `artifacts/ignore.csv` |
 | Deployment environments (DEV/SIT/UAT/PROD) | `artifacts/environments.csv` |
 | Git workflow + release process + CI/CD mapping | `artifacts/release-workflow.csv` |
+| Per-service `cmd/*` deployable binaries (kind, port, Dockerfile, description) | `artifacts/entrypoints.csv` |
+| Entry points freshness (per service) | `artifacts/entrypoints.meta.csv` |
 | DB schema (per DB, per table) | `artifacts/schemas/<db>/tables/<table>.csv` |
 | Enum constants (Go-extracted) | `artifacts/schemas/<db>/enums/<table>.csv` |
 | Code conventions (per service) | `artifacts/conventions/<service>/{dependencies,structure,logging,testing}.md` |
@@ -173,6 +175,7 @@ missing → ASK; do not guess.
    - Append to tasks/done.csv (id, completed_at, commit_sha, summary, retro_refs)
    - If you changed schema → task schemas:refresh
    - If you changed enum → task enums:extract
+   - If you added/renamed/deleted a `cmd/*` directory → task entrypoints:refresh
    - If you observed an undocumented convention → flag in retrospective
 ```
 
@@ -219,8 +222,10 @@ specified one of these:
 |---|---|
 | "update artifacts" | ASK: "all? schemas? service X?" |
 | "update artifacts all" | run all extractors in sequence |
-| "update schemas" / "update schemas <db>" | `task schemas:refresh` (scoped) |
+| "update schemas" | `task schemas:refresh` (all 8 DBs, clean + extract) |
+| "update schemas <db>" | `task schemas:refresh:db -- <db>` (scoped, no clean) |
 | "update enums" | `task enums:extract` |
+| "update entrypoints" | `task entrypoints:refresh` (re-walks every `cmd/*`) |
 | "update service <name>" | refresh all artifacts touching that service |
 | "update convention <service>" | guided human review (you can't auto) |
 
@@ -241,8 +246,8 @@ After every refresh:
 | `schemas/<db>/tables/` | `services.csv` |
 | `schemas/<db>/enums/` | `databases.csv`, `envs.csv` |
 | `schemas/<db>/_index.csv` | `conventions/<service>/*.md` |
-|  | `<pipeline>/` docs |
-|  | `terraform-modules.csv` |
+| `entrypoints.csv` (description column preserved across runs; `kind=tool` rows excluded) | `<pipeline>/` docs |
+| `entrypoints.meta.csv` | `terraform-modules.csv` |
 
 For human-curated → propose changes via retrospective; never edit silently.
 

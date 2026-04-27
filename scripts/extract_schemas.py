@@ -12,8 +12,10 @@ Run:
 
 from __future__ import annotations
 
+import argparse
 import csv
 import os
+import subprocess
 import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -61,6 +63,71 @@ FK_ACTION = {"a": "NO ACTION", "r": "RESTRICT", "c": "CASCADE", "n": "SET NULL",
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _git_state(repo_path: str) -> tuple[str, str]:
+    """Return (sha, branch) for repo_path, or ("UNKNOWN", "UNKNOWN") on any failure."""
+    if not repo_path or not Path(repo_path).is_dir():
+        return "UNKNOWN", "UNKNOWN"
+    try:
+        sha = subprocess.check_output(
+            ["git", "-C", repo_path, "rev-parse", "HEAD"],
+            stderr=subprocess.DEVNULL,
+        ).decode().strip()
+        branch = subprocess.check_output(
+            ["git", "-C", repo_path, "rev-parse", "--abbrev-ref", "HEAD"],
+            stderr=subprocess.DEVNULL,
+        ).decode().strip()
+        return sha, branch
+    except Exception:
+        return "UNKNOWN", "UNKNOWN"
+
+
+def _service_path(service_name: str) -> str:
+    """Look up a service's absolute path from artifacts/services.csv."""
+    services_csv = REPO_ROOT / "artifacts" / "services.csv"
+    if not services_csv.is_file():
+        return ""
+    with services_csv.open() as f:
+        for row in csv.DictReader(f):
+            if row["service"] == service_name:
+                return row["path"]
+    return ""
+
+
+def _db_source_repo(db_name: str) -> str:
+    """Look up the service that owns a DB (via artifacts/databases.csv)."""
+    databases_csv = REPO_ROOT / "artifacts" / "databases.csv"
+    if not databases_csv.is_file():
+        return ""
+    with databases_csv.open() as f:
+        for row in csv.DictReader(f):
+            if row["database"] == db_name:
+                return row.get("migration_project_source", "")
+    return ""
+
+
+def _write_meta(out_dir: Path, db_name: str, extracted_by: str, notes: str = "") -> None:
+    """Write `_meta.csv` for one DB with current timestamp + source SHA + branch."""
+    source_repo = _db_source_repo(db_name) or "UNKNOWN"
+    repo_path = _service_path(source_repo) if source_repo != "UNKNOWN" else ""
+    sha, branch = _git_state(repo_path)
+
+    meta_path = out_dir / "_meta.csv"
+    meta_path.parent.mkdir(parents=True, exist_ok=True)
+    fields = ["last_extracted_at", "extracted_by", "source_commit_sha",
+              "source_repo", "source_branch", "notes"]
+    with meta_path.open("w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=fields, quoting=csv.QUOTE_MINIMAL)
+        w.writeheader()
+        w.writerow({
+            "last_extracted_at": _now_iso(),
+            "extracted_by": extracted_by,
+            "source_commit_sha": sha,
+            "source_repo": source_repo,
+            "source_branch": branch,
+            "notes": notes,
+        })
 
 
 def _safe_filename(s: str) -> str:
@@ -470,16 +537,39 @@ def extract_clickhouse(cfg: DatabaseConfig, out_dir: Path) -> dict:
 # ============================================================
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--only",
+        help="Limit extraction to a single DB by name (e.g. crm_financial). "
+             "Default: extract all 8 DBs.",
+    )
+    parser.add_argument(
+        "--by",
+        default="claude",
+        choices=["user", "claude", "ci"],
+        help="Value written to `extracted_by` in each per-DB _meta.csv (default: claude)",
+    )
+    args = parser.parse_args()
+
     if not ENV_FILE.exists():
         print(f"ERROR: .env not found at {ENV_FILE}", file=sys.stderr)
         return 1
     load_dotenv(ENV_FILE)
 
+    if args.only:
+        dbs_to_run = [d for d in DATABASES if d.name == args.only]
+        if not dbs_to_run:
+            valid = ", ".join(d.name for d in DATABASES)
+            print(f"ERROR: unknown database '{args.only}'. Valid: {valid}", file=sys.stderr)
+            return 1
+    else:
+        dbs_to_run = list(DATABASES)
+
     extracted_at = _now_iso()
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
 
     index_rows: list[dict] = []
-    for cfg in DATABASES:
+    for cfg in dbs_to_run:
         print(f"[{cfg.kind}] {cfg.name} (prefix={cfg.env_prefix}) ...")
         out_dir = OUTPUT_ROOT / cfg.name
 
@@ -501,21 +591,41 @@ def main() -> int:
             "table_count": result.get("table_count", 0),
             "extracted_at": extracted_at,
             "error": result.get("error", ""),
+            "is_stale": False,
         })
         print(f"  -> {result.get('status')} ({result.get('table_count')} tables)")
+
+        # Auto-write per-DB _meta.csv only when extraction succeeded — failures
+        # leave the existing meta untouched (still bootstrap on first run).
+        if result.get("status") == "ok":
+            _write_meta(out_dir, cfg.name, args.by)
+
+    # _index.csv is full inventory across DBs — when running --only, merge with
+    # any pre-existing rows for DBs we didn't touch this run. Pre-existing rows
+    # get is_stale=True so users can spot-check freshness in one column.
+    if args.only and (OUTPUT_ROOT / "_index.csv").is_file():
+        merged: dict[str, dict] = {}
+        with (OUTPUT_ROOT / "_index.csv").open() as f:
+            for row in csv.DictReader(f):
+                row["is_stale"] = "True"  # carried over from prior run
+                merged[row["database"]] = row
+        for row in index_rows:
+            merged[row["database"]] = row  # current run overwrites
+        index_rows = [merged[name] for name in sorted(merged)]
 
     _write_csv(
         OUTPUT_ROOT / "_index.csv",
         ["database", "kind", "host", "port", "database_name",
-         "status", "table_count", "extracted_at", "error"],
+         "status", "table_count", "extracted_at", "error", "is_stale"],
         index_rows,
     )
 
     print(f"\nOutput: {OUTPUT_ROOT}")
 
-    failures = [r for r in index_rows if r["status"].startswith("error")]
+    failures = [r for r in index_rows if r["status"].startswith("error")
+                and r["database"] in {d.name for d in dbs_to_run}]
     if failures:
-        print(f"\n{len(failures)} database(s) failed:", file=sys.stderr)
+        print(f"\n{len(failures)} database(s) failed this run:", file=sys.stderr)
         for f in failures:
             print(f"  - {f['database']}: {f['error']}", file=sys.stderr)
         return 2

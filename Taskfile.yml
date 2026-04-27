@@ -22,10 +22,20 @@ tasks:
       - rm -rf artifacts/schemas
 
   schemas:refresh:
-    desc: Clean then extract — fresh run, drops stale per-table CSVs
+    desc: Clean then extract — fresh run for ALL 8 DBs, drops stale per-table CSVs
     cmds:
       - task: schemas:clean
       - task: schemas:extract
+
+  schemas:refresh:db:
+    desc: 'Refresh one DB only (no clean) — usage: task schemas:refresh:db -- crm_financial'
+    cmds:
+      - python3 scripts/extract_schemas.py --only {{.CLI_ARGS}}
+
+  schemas:diff:
+    desc: 'Semantic diff for one DB schema — usage: task schemas:diff -- crm_financial [--base HEAD~1]'
+    cmds:
+      - python3 scripts/schema_diff.py {{.CLI_ARGS}}
 
   enums:extract:
     desc: Extract enum values from Go code → artifacts/schemas/<db>/enums/<table>.csv
