@@ -1,0 +1,11 @@
+ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_foreign_key,fk_reference,comment
+1,id,uuid,False,,True,False,False,,
+2,user_id,uuid,False,,False,False,False,,
+3,account_type,character varying(20),False,,False,False,False,,
+4,wallet_type,character varying(20),True,,False,False,False,,
+5,mt5_login,bigint,True,,False,False,False,,
+6,ledger_account_id,character varying(100),False,,False,False,False,,
+7,balance,"numeric(20,6)",False,0,False,False,False,,
+8,status,character varying(20),True,'ACTIVE'::character varying,False,False,False,,
+9,created_at,timestamp with time zone,False,now(),False,False,False,,
+10,updated_at,timestamp with time zone,False,now(),False,False,False,,

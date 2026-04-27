@@ -1,7 +1,14 @@
 schema,table,kind,row_count_estimate,size_bytes,comment
+public,accounts,TABLE,-1,32768,
 public,goose_db_version,TABLE,-1,24576,
+public,ledger_accounts,TABLE,-1,57344,
+public,ledger_chart_of_accounts,TABLE,-1,24576,
+public,ledger_entries,TABLE,-1,32768,
+public,mt5_account_transactions,TABLE,-1,81920,"All Trading Account operations: PSP deposits/withdrawals to MT5, trades (profit/loss/spread/commission/swap), internal transfers involving MT5, liquidations, rebalances. Shadow-write copy from CRM — no foreign keys."
+public,outbox_events,TABLE,-1,24576,
 public,rebate_accruals,TABLE,12,155648,Immutable records of rebate accrued per deal per beneficiary level. Status transitions: PENDING → SETTLED.
 public,rebate_distributions,TABLE,12,204800,Immutable ledger of rebate distributions per trade per beneficiary level.
 public,rebate_earnings,TABLE,-1,16384,"Running total of lifetime rebate earnings per IB user. Only increments, never decreases."
-public,rebate_settlements,TABLE,12,90112,Batch settlement records that group rebate accruals and credit wallets periodically.
-public,wallet_transactions,TABLE,-1,98304,"Unified immutable ledger of all wallet movements: rebate distributions, PSP deposits/withdrawals, internal transfers, manual adjustments. Never update or delete rows."
+public,rebate_settlements,TABLE,12,73728,Batch settlement records that group rebate accruals and credit wallets periodically.
+public,transaction_psp_details,TABLE,-1,32768,Strictly audited child table storing immutable FX rates and PSP specific metadata.
+public,wallet_transactions,TABLE,-1,188416,"Unified immutable ledger of all wallet movements: rebate distributions, PSP deposits/withdrawals, internal transfers, manual adjustments. Never update or delete rows."

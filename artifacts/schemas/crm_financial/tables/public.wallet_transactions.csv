@@ -14,7 +14,7 @@ ordinal,column_name,data_type,is_nullable,default,is_primary_key,is_unique,is_fo
 13,wallet_type,character varying(20),False,,False,False,False,,
 14,status,character varying(30),False,'PENDING'::character varying,False,False,False,,
 15,counterpart_mt5_account_id,uuid,True,,False,False,False,,
-16,psp_detail_id,uuid,True,,False,False,False,,
+16,psp_detail_id,uuid,True,,False,False,True,public.transaction_psp_details.transaction_id,
 17,description,text,True,,False,False,False,,
 18,internal_notes,text,True,,False,False,False,,
 19,approved_by,uuid,True,,False,False,False,,

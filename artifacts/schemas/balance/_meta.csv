@@ -1,2 +1,2 @@
 last_extracted_at,extracted_by,source_commit_sha,source_repo,source_branch,notes
-2026-04-26T00:00:00Z,bootstrap,EXAMPLE_SHA_REPLACE_AFTER_FIRST_REFRESH,onetrust-mt5-processor,main,EXAMPLE row — this is the template for _meta.csv across all artifact sets. Replace with real values after the first `task schemas:refresh balance` run. See CLAUDE.md §8.2 for usage.
+2026-04-27T06:40:07Z,claude,e73ae853cf48dbd37de94b4a779f770ecca63132,onetrust-mt5-processor,main,
