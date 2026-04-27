@@ -14,6 +14,21 @@ Claude reads this **first** per [CLAUDE.md §8.2 step 3a](../CLAUDE.md).
 | [`environments.csv`](./environments.csv) | Deployment environments (DEV/SIT/UAT/PROD) + promotion order + infra stack links |
 | [`release-workflow.csv`](./release-workflow.csv) | Git branch ↔ environment ↔ CI/CD mapping; release process + approval gates |
 
+## Entry Points (semi-auto)
+
+- Source: filesystem walk of each service's `cmd/*` via `task entrypoints:refresh`
+  (or `python3 scripts/extract_entrypoints.py` directly)
+- All fields auto-extracted EXCEPT `description` — preserved across runs; new
+  cmds get `[TODO review]` placeholder for human edit.
+- **Scope: deployable cmds only.** Rows where `kind=tool`
+  (migrate, kafka-topic-*, *-generator, mock, seed-*) are detected
+  but **excluded** — they aren't built into container images.
+
+| File | Purpose |
+|---|---|
+| [`entrypoints.csv`](./entrypoints.csv) | Per-service `cmd/*` deployable binaries → Dockerfile mapping (kind, port, description) |
+| [`entrypoints.meta.csv`](./entrypoints.meta.csv) | One row per service: last_extracted_at + source_commit_sha + extracted_by |
+
 ## DB Schemas (auto-extracted)
 
 - Source: live PostgreSQL/ClickHouse via `task schemas:refresh`

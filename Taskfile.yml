@@ -41,3 +41,13 @@ tasks:
     desc: Extract enum values from Go code → artifacts/schemas/<db>/enums/<table>.csv
     cmds:
       - python3 scripts/extract_enums.py
+
+  entrypoints:refresh:
+    desc: Re-extract cmd/* entry points → artifacts/entrypoints.csv (+ meta). Excludes kind=tool.
+    cmds:
+      - python3 scripts/extract_entrypoints.py
+
+  entrypoints:check:
+    desc: Dry-run — exit 1 if entrypoints.csv would change (use in CI)
+    cmds:
+      - python3 scripts/extract_entrypoints.py --check
