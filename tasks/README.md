@@ -8,6 +8,7 @@ Lightweight task tracking for Claude (and humans) working in this mission-contro
 |---|---|
 | [`inbox.csv`](./inbox.csv) | Active task queue — work pending |
 | [`done.csv`](./done.csv) | Completed / cancelled tasks — archive |
+| [`specs/`](./specs/) | Optional per-task detailed specs (`<id>.md`) — used when a task description outgrows the CSV cell |
 
 ## Lifecycle
 
@@ -86,6 +87,10 @@ All `inbox.csv` columns **plus** these 5:
 - A field containing `,`, `"`, or newline must be wrapped in `"…"`
 - A literal `"` inside a wrapped field becomes `""`
 - All commands use the `Edit` tool (not `echo` / `printf`) to preserve formatting
+
+## Long descriptions: spec files
+
+When a task description grows long enough to be unreadable inline (rough rule: > 500 chars or > 1 paragraph of structured detail), move the full body to `specs/<id>.md` and keep the `description` field in `inbox.csv` short — a 1-2 sentence summary plus a pointer to the spec file. Add the spec path to `references` so command tools surface it. This keeps `inbox.csv` scannable while letting Claude (and humans) load full context on demand.
 
 ## Drift between artifact and target repo
 
