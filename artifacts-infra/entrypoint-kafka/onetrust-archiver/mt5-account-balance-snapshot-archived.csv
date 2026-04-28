@@ -1,0 +1,2 @@
+direction,topic,consumer_group
+in,mt5-processor.account.balance.snapshot.created,mt5-account-balance-snapshot-archived

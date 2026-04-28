@@ -1,0 +1,10 @@
+env_name,source
+CLICKHOUSE_ENABLE,inline-cm-ref:archiver-config
+DATABASE_DATABASE,inline-secret-ref:archiver-secret
+DATABASE_HOST,inline-secret-ref:archiver-secret
+DATABASE_PASSWORD,inline-secret-ref:archiver-secret
+DATABASE_SSLMODE,inline-secret-ref:archiver-secret
+DATABASE_USERNAME,inline-secret-ref:archiver-secret
+KAFKA_BROKERS,inline-secret-ref:kafka-stream-brokers
+POD_NAME,inline-literal
+STAGE,inline-cm-ref:archiver-config

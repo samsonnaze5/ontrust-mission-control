@@ -1,0 +1,14 @@
+env_name,source
+APP_ENV,inline-cm-ref:aeternix-be-config
+APP_VERSION,inline-cm-ref:aeternix-be-config
+DATABASE_CONNECT_TIMEOUT,inline-literal
+DATABASE_DATABASE,inline-cm-ref:aeternix-be-config
+DATABASE_HOST,inline-cm-ref:aeternix-be-config
+DATABASE_PASSWORD,inline-secret-ref:aeternix-be-secrets
+DATABASE_PORT,inline-literal
+DATABASE_SSLMODE,inline-literal
+DATABASE_USERNAME,inline-literal
+OTEL_EXPORTER_OTLP_ENDPOINT,inline-cm-ref:aeternix-be-config
+OTEL_SERVICE_NAME,inline-cm-ref:aeternix-be-config
+PYROSCOPE_SERVER_ADDRESS,inline-cm-ref:aeternix-be-config
+STAGE,inline-literal

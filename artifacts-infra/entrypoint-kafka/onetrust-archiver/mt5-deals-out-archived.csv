@@ -1,0 +1,2 @@
+direction,topic,consumer_group
+in,mt5-processor.deal.out.created,mt5-deals-out-archived

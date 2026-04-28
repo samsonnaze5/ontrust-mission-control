@@ -1,0 +1,15 @@
+env_name,source
+CLICKHOUSE_DATABASE,inline-cm-ref:mt5-account-balance-snapshot-archived-config
+CLICKHOUSE_ENABLE,inline-cm-ref:mt5-account-balance-snapshot-archived-config
+CLICKHOUSE_HOST,inline-cm-ref:mt5-account-balance-snapshot-archived-config
+CLICKHOUSE_PASSWORD,inline-secret-ref:mt5-account-balance-snapshot-archived-secret
+CLICKHOUSE_USERNAME,inline-cm-ref:mt5-account-balance-snapshot-archived-config
+DATABASE_DATABASE,inline-secret-ref:mt5-account-balance-snapshot-archived-secret
+DATABASE_HOST,inline-secret-ref:mt5-account-balance-snapshot-archived-secret
+DATABASE_PASSWORD,inline-secret-ref:mt5-account-balance-snapshot-archived-secret
+DATABASE_SSLMODE,inline-secret-ref:mt5-account-balance-snapshot-archived-secret
+DATABASE_USERNAME,inline-secret-ref:mt5-account-balance-snapshot-archived-secret
+KAFKA_BROKERS,inline-secret-ref:kafka-stream-brokers
+METRICS_PORT,inline-cm-ref:mt5-account-balance-snapshot-archived-config
+POD_NAME,inline-literal
+STAGE,inline-cm-ref:mt5-account-balance-snapshot-archived-config

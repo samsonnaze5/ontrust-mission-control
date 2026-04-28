@@ -1,0 +1,13 @@
+env_name,source
+CLICKHOUSE_DATABASE,inline-cm-ref:financial-wallet-transaction-archived-config
+CLICKHOUSE_ENDPOINT,inline-cm-ref:financial-wallet-transaction-archived-config
+CLICKHOUSE_PASSWORD,inline-secret-ref:financial-wallet-transaction-archived-secret
+CLICKHOUSE_USER,inline-cm-ref:financial-wallet-transaction-archived-config
+DATABASE_DATABASE,inline-secret-ref:financial-wallet-transaction-archived-secret
+DATABASE_HOST,inline-secret-ref:financial-wallet-transaction-archived-secret
+DATABASE_PASSWORD,inline-secret-ref:financial-wallet-transaction-archived-secret
+DATABASE_SSLMODE,inline-secret-ref:financial-wallet-transaction-archived-secret
+DATABASE_USERNAME,inline-secret-ref:financial-wallet-transaction-archived-secret
+KAFKA_BROKERS,inline-secret-ref:kafka-stream-brokers
+POD_NAME,inline-literal
+STAGE,inline-cm-ref:financial-wallet-transaction-archived-config

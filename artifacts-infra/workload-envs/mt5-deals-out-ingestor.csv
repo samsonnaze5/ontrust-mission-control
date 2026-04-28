@@ -1,0 +1,14 @@
+env_name,source
+DATABASE_DATABASE,inline-secret-ref:mt5-deals-out-ingestor-secret
+DATABASE_HOST,inline-secret-ref:mt5-deals-out-ingestor-secret
+DATABASE_PASSWORD,inline-secret-ref:mt5-deals-out-ingestor-secret
+DATABASE_SSLMODE,inline-secret-ref:mt5-deals-out-ingestor-secret
+DATABASE_TRADING_OUT_DATABASE,inline-secret-ref:mt5-deals-out-ingestor-secret
+DATABASE_TRADING_OUT_HOST,inline-secret-ref:mt5-deals-out-ingestor-secret
+DATABASE_TRADING_OUT_PASSWORD,inline-secret-ref:mt5-deals-out-ingestor-secret
+DATABASE_TRADING_OUT_PORT,inline-secret-ref:mt5-deals-out-ingestor-secret
+DATABASE_TRADING_OUT_USERNAME,inline-secret-ref:mt5-deals-out-ingestor-secret
+DATABASE_USERNAME,inline-secret-ref:mt5-deals-out-ingestor-secret
+KAFKA_BROKERS,inline-secret-ref:kafka-stream-brokers
+POD_NAME,inline-literal
+STAGE,inline-cm-ref:mt5-deals-out-ingestor-config

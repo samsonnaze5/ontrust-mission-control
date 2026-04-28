@@ -1,0 +1,3 @@
+direction,topic,consumer_group
+in,financial.rebate.settlement.created,financial-wallet-transaction-writer
+out,financial.rebate.settlement.created.dlq,

@@ -1,0 +1,2 @@
+direction,topic,consumer_group
+in,mt5.account.balance.incoming,mt5-account-balance-snapshot-builder

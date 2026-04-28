@@ -1,0 +1,3 @@
+direction,topic,consumer_group
+in,trade.events,financial-trade-event-group
+out,trade.events.dlq,

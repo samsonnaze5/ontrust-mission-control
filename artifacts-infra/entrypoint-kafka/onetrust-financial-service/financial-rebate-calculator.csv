@@ -1,0 +1,3 @@
+direction,topic,consumer_group
+in,mt5-processor.deal.out.created,financial-rebate-calculator
+out,mt5-processor.deal.out.created.dlq,

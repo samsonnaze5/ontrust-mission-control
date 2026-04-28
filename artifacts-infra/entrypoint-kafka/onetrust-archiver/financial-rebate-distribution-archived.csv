@@ -1,0 +1,2 @@
+direction,topic,consumer_group
+in,financial.rebate.calculated,financial-rebate-distribution-archived

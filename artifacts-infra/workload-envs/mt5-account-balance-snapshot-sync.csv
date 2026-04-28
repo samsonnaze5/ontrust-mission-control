@@ -1,0 +1,14 @@
+env_name,source
+DATABASE_DATABASE,inline-secret-ref:mt5-account-balance-snapshot-sync-secret
+DATABASE_HOST,inline-secret-ref:mt5-account-balance-snapshot-sync-secret
+DATABASE_PASSWORD,inline-secret-ref:mt5-account-balance-snapshot-sync-secret
+DATABASE_SSLMODE,inline-secret-ref:mt5-account-balance-snapshot-sync-secret
+DATABASE_USERNAME,inline-secret-ref:mt5-account-balance-snapshot-sync-secret
+KAFKA_BROKERS,inline-secret-ref:kafka-stream-brokers
+POD_NAME,inline-literal
+REDIS_CLUSTER_ENABLED,inline-cm-ref:mt5-account-balance-snapshot-sync-config
+REDIS_ENABLE,inline-cm-ref:mt5-account-balance-snapshot-sync-config
+REDIS_HOST,inline-cm-ref:mt5-account-balance-snapshot-sync-config
+REDIS_PASSWORD,inline-secret-ref:mt5-account-balance-snapshot-sync-secret
+REDIS_PORT,inline-cm-ref:mt5-account-balance-snapshot-sync-config
+STAGE,inline-cm-ref:mt5-account-balance-snapshot-sync-config

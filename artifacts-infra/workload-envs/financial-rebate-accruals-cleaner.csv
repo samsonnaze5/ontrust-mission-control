@@ -1,0 +1,16 @@
+env_name,source
+DATABASE_DATABASE,inline-secret-ref:financial-rebate-accruals-cleaner-secret
+DATABASE_FINANCIAL_DATABASE,inline-secret-ref:financial-rebate-accruals-cleaner-secret
+DATABASE_FINANCIAL_HOST,inline-secret-ref:financial-rebate-accruals-cleaner-secret
+DATABASE_FINANCIAL_PASSWORD,inline-secret-ref:financial-rebate-accruals-cleaner-secret
+DATABASE_FINANCIAL_PORT,inline-secret-ref:financial-rebate-accruals-cleaner-secret
+DATABASE_FINANCIAL_SSLMODE,inline-secret-ref:financial-rebate-accruals-cleaner-secret
+DATABASE_FINANCIAL_USERNAME,inline-secret-ref:financial-rebate-accruals-cleaner-secret
+DATABASE_HOST,inline-secret-ref:financial-rebate-accruals-cleaner-secret
+DATABASE_PASSWORD,inline-secret-ref:financial-rebate-accruals-cleaner-secret
+DATABASE_SSLMODE,inline-secret-ref:financial-rebate-accruals-cleaner-secret
+DATABASE_USERNAME,inline-secret-ref:financial-rebate-accruals-cleaner-secret
+KAFKA_BROKERS,inline-secret-ref:kafka-stream-brokers
+METRICS_PORT,inline-cm-ref:financial-rebate-accruals-cleaner-config
+POD_NAME,inline-literal
+STAGE,inline-cm-ref:financial-rebate-accruals-cleaner-config

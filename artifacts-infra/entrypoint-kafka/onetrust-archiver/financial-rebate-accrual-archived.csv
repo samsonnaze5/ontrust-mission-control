@@ -1,0 +1,2 @@
+direction,topic,consumer_group
+in,financial.rebate.accrual.created,financial-rebate-accrual-archived

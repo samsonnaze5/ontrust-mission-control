@@ -1,0 +1,6 @@
+service,last_extracted_at,extracted_by,source_commit_sha,source_branch,notes
+onetrust-mt5-processor,2026-04-27T07:00:00Z,claude,e73ae853cf48dbd37de94b4a779f770ecca63132,main,manual trace of cmd/*/main.go field accesses + configs/config.go env mapping
+onetrust-financial-service,2026-04-27T07:00:00Z,claude,ee92f4d5dac93f7eb9d3ebe6cd4c91f6441da3df,main,manual trace of cmd/*/main.go field accesses + configs/config.go env mapping
+onetrust-archiver,2026-04-27T07:00:00Z,claude,0d2fe97f11ab17ab770bec2337be2d3a9b42f96f,main,manual trace including bootstrap.go shared init helper for *-archived cmds
+onetrust-client-portal-api,2026-04-27T07:00:00Z,claude,5df68f319127d6b2b01bf325531ca3d80ce08947,develop,"manual trace; baseline 17 envs forced by validate() (STAGE+DATABASE_*4+JWT_SECRET+PSP_*7+MT5_PROXY_*4) added to every cmd that calls configs.New(); server-swagger has 0 envs (no configs.New)"
+onetrust-mt5-proxy-api,2026-04-27T07:00:00Z,claude,38bbc18b3abd1025e3b02e4abecb2373613b62f6,main,manual trace of cmd/server/main.go + configs/config.go

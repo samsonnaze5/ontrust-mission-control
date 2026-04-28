@@ -62,7 +62,8 @@ Per-DB structure:
 | (other services) | TBD | not yet documented |
 
 Per-pipeline files: `nfr.csv`, `flow.csv`, `backlog-functional.csv`,
-`backlog-nonfunctional.csv`, `kafka-*.csv`, `messages/`, `edge-cases.csv`
+`backlog-nonfunctional.csv`, `kafka-*.csv`, `messages/`, `edge-cases/`
+(per-component CSVs split by `consumers/` and `workers/` + `_index.csv`)
 
 ## Code Conventions (human-curated, NOT YET POPULATED)
 
@@ -82,6 +83,33 @@ service per [CLAUDE.md §8.4](../CLAUDE.md).
 - `_index.csv` — Terraform stacks (8 entries: prd, eu-west-2, deploy-base,
   deploy-overlays, kubeflow-manifests, ci-jenkins, ci-github-actions)
 - `terraform-modules.csv` — 19 reusable modules
+- `k8s-workloads.csv` — PRD K8s workloads; columns `entrypoint_service` +
+  `entrypoint_cmd` link each workload back to a deployable cmd in
+  `artifacts/entrypoints.csv` (`n/a` for non-Go workloads: Debezium, Python
+  streams, Jobs, seeders)
+- `entrypoint-envs/<service>/<cmd>.csv` — per-cmd list of env vars the
+  current backend code requires at runtime (FK to `artifacts/envs.csv`,
+  one column `env_name`, sorted). Goal: bridge backend code (source of
+  truth for required envs) ↔ infra ConfigMap/Secret (what's provided);
+  ops uses this to check what's missing per workload.
+- `entrypoint-envs/_index.csv` — rollup: `service, cmd, env_count,
+  has_workload` (44 cmds; 26 currently deployed in PRD)
+- `entrypoint-envs.meta.csv` — per-service freshness with backend repo SHA
+- `entrypoint-kafka/<service>/<cmd>.csv` — per-cmd Kafka topic + consumer
+  group from backend code (columns `direction`, `topic`,
+  `consumer_group`). Source: `internal/pipeline/topics.go` + main.go
+  usage. 31/44 cmds use Kafka.
+- `workload-envs/<workload>.csv` — per-K8s-workload structured env list
+  parsed from `kubeflow/prd/**/*.yaml` (columns `env_name`, `source`
+  where source = `inline-cm-ref:<cm>` / `inline-secret-ref:<secret>` /
+  `configmap:<name>` / `inline-literal`). 27 workloads covered (those
+  mapped to a backend cmd).
+- `cross-check-report.md` — **deliverable for DevOps**. Markdown report
+  comparing backend code (entrypoints + envs + kafka) vs PRD infra
+  (k8s-workloads + workload-envs + kafka-consumers + kafka-topics).
+  Lists action items (env missing / kafka topic+CG mismatches), per-cmd
+  diff, orphan workloads. Regenerate via
+  `scripts/build_cross_check_report.py`.
 
 ## Glossary
 

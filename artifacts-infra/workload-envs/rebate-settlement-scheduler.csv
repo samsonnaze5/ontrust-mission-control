@@ -1,0 +1,14 @@
+env_name,source
+DATABASE_DATABASE,inline-secret-ref:rebate-settlement-scheduler-secret
+DATABASE_FINANCIAL_DATABASE,inline-secret-ref:rebate-settlement-scheduler-secret
+DATABASE_FINANCIAL_HOST,inline-secret-ref:rebate-settlement-scheduler-secret
+DATABASE_FINANCIAL_PASSWORD,inline-secret-ref:rebate-settlement-scheduler-secret
+DATABASE_FINANCIAL_PORT,inline-secret-ref:rebate-settlement-scheduler-secret
+DATABASE_FINANCIAL_USERNAME,inline-secret-ref:rebate-settlement-scheduler-secret
+DATABASE_HOST,inline-secret-ref:rebate-settlement-scheduler-secret
+DATABASE_PASSWORD,inline-secret-ref:rebate-settlement-scheduler-secret
+DATABASE_SSLMODE,inline-secret-ref:rebate-settlement-scheduler-secret
+DATABASE_USERNAME,inline-secret-ref:rebate-settlement-scheduler-secret
+KAFKA_BROKERS,inline-secret-ref:kafka-stream-brokers
+POD_NAME,inline-literal
+STAGE,inline-cm-ref:rebate-settlement-scheduler-config

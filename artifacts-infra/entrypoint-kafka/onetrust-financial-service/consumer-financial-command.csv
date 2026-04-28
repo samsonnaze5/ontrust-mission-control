@@ -1,0 +1,3 @@
+direction,topic,consumer_group
+in,financial.commands,financial-command-group
+out,financial.commands.dlq,

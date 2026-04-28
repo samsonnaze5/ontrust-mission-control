@@ -1,0 +1,14 @@
+env_name,source
+DATABASE_DATABASE,inline-secret-ref:mt5-account-balance-snapshot-builder-secret
+DATABASE_HOST,inline-secret-ref:mt5-account-balance-snapshot-builder-secret
+DATABASE_PASSWORD,inline-secret-ref:mt5-account-balance-snapshot-builder-secret
+DATABASE_SSLMODE,inline-secret-ref:mt5-account-balance-snapshot-builder-secret
+DATABASE_TRADING_BALANCE_DATABASE,inline-secret-ref:mt5-account-balance-snapshot-builder-secret
+DATABASE_TRADING_BALANCE_HOST,inline-secret-ref:mt5-account-balance-snapshot-builder-secret
+DATABASE_TRADING_BALANCE_PASSWORD,inline-secret-ref:mt5-account-balance-snapshot-builder-secret
+DATABASE_TRADING_BALANCE_PORT,inline-secret-ref:mt5-account-balance-snapshot-builder-secret
+DATABASE_TRADING_BALANCE_USERNAME,inline-secret-ref:mt5-account-balance-snapshot-builder-secret
+DATABASE_USERNAME,inline-secret-ref:mt5-account-balance-snapshot-builder-secret
+KAFKA_BROKERS,inline-secret-ref:kafka-stream-brokers
+POD_NAME,inline-literal
+STAGE,inline-cm-ref:mt5-account-balance-snapshot-builder-config

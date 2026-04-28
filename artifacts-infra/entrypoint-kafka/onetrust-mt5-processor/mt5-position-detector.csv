@@ -1,0 +1,3 @@
+direction,topic,consumer_group
+in,mt5-processor.deal.out.created,mt5-position-detector
+out,mt5-processor.deal.out.created.dlq,

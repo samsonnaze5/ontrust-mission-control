@@ -1,0 +1,8 @@
+env_name,source
+DATABASE_CONNECT_TIMEOUT,inline-literal
+DATABASE_DATABASE,inline-cm-ref:aeternix-be-config
+DATABASE_HOST,inline-cm-ref:aeternix-be-config
+DATABASE_PASSWORD,inline-secret-ref:aeternix-be-secrets
+DATABASE_PORT,inline-literal
+DATABASE_USERNAME,inline-literal
+STAGE,inline-literal

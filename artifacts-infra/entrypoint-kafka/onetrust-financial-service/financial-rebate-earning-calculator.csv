@@ -1,0 +1,2 @@
+direction,topic,consumer_group
+in,financial.wallet.transaction.created,financial-rebate-earning-calculator

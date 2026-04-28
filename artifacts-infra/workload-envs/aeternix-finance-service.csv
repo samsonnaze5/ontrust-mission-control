@@ -1,0 +1,14 @@
+env_name,source
+DATABASE_DATABASE,inline-secret-ref:finance-service-secret
+DATABASE_FINANCIAL_DATABASE,inline-secret-ref:finance-service-secret
+DATABASE_FINANCIAL_HOST,inline-secret-ref:finance-service-secret
+DATABASE_FINANCIAL_PASSWORD,inline-secret-ref:finance-service-secret
+DATABASE_FINANCIAL_PORT,inline-secret-ref:finance-service-secret
+DATABASE_FINANCIAL_USERNAME,inline-secret-ref:finance-service-secret
+DATABASE_HOST,inline-secret-ref:finance-service-secret
+DATABASE_PASSWORD,inline-secret-ref:finance-service-secret
+DATABASE_SSLMODE,inline-secret-ref:finance-service-secret
+DATABASE_USERNAME,inline-secret-ref:finance-service-secret
+KAFKA_BROKERS,inline-secret-ref:finance-service-secret
+POD_NAME,inline-literal
+STAGE,inline-cm-ref:finance-service-config

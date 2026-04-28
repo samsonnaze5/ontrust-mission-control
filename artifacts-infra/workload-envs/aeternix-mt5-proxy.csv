@@ -1,0 +1,5 @@
+env_name,source
+APP_PORT,inline-literal
+ENVIRONMENT,inline-literal
+KAFKA_BROKERS,inline-cm-ref:aeternix-be-config
+LOG_LEVEL,inline-literal

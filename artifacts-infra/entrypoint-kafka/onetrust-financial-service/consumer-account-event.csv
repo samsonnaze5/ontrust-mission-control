@@ -1,0 +1,3 @@
+direction,topic,consumer_group
+in,account.events,financial-account-event-group
+out,account.events.dlq,
