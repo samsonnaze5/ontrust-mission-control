@@ -1,0 +1,5 @@
+pipeline_step,category,scenario,expected_behavior,verification
+10,idempotency,distribution event เข้า 2 ครั้ง,unique constraint บน distribution_id — second time = no-op,inject duplicate → rebate_accruals row count คงที่
+10,referential,beneficiary_user_id ไม่มี wallet_id (user ใหม่ไม่มี wallet),DLQ + alert — รอ wallet provisioned,ส่ง distribution ของ user ที่ไม่มี wallet → DLQ
+10,wallet-state,wallet disabled / frozen,INSERT accrual ตามปกติ (status = PENDING) — settlement scheduler ค่อยตัดสิน,ส่ง distribution ของ wallet ที่ frozen → INSERT accrual + alert
+10,late-arrival,distribution event เก่าหลายวัน (consumer lag),accrue ตามปกติ — ไม่มี time cutoff,ส่ง distribution ที่ created_at = 7 วันก่อน → INSERT accrual สำเร็จ

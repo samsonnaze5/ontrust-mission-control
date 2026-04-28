@@ -1,0 +1,6 @@
+pipeline_step,category,scenario,expected_behavior,verification
+12,concurrency,scheduler 2 instance รันพร้อมกัน (HA deployment),ใช้ pg_advisory_lock หรือ leader election — instance เดียวเท่านั้นทำ batch รอบนึง,start 2 instances → log แสดงเฉพาะ instance ที่ได้ lock ทำ batch
+12,atomic-batch,crash ระหว่าง INSERT settlement กับ UPDATE accruals SETTLED,ทำใน transaction เดียว — rollback ถ้า fail,kill scheduler กลาง batch → restart → accruals ที่ค้าง PENDING ถูก batch ครั้งถัดไปได้ปกติ
+12,boundary,total settlement = 0 (เกิดจาก rounding amounts เล็กๆ),skip — ห้าม INSERT settlement 0 บาท,inject accruals ที่รวมแล้ว = 0 → ไม่ INSERT settlement
+12,wallet-state,user ไม่มี active wallet,hold accruals คงสถานะ PENDING ข้ามรอบ — ห้าม flip ไป SETTLED,ส่ง user ที่ wallet ถูก soft-delete → accruals ของ user นั้นยัง PENDING รอบถัดไป
+12,per-user-isolation,user เดียวกันมี accruals หลาย batch ใน partition รอบเดียว,SELECT FOR UPDATE per (user_id + wallet_id) — ป้องกัน race ของ scheduler vs ตัวอื่น,test 1000 accruals ของ user เดียว → 1 settlement row + ทุก accruals → SETTLED

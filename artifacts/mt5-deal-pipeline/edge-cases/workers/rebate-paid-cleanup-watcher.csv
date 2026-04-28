@@ -1,0 +1,6 @@
+pipeline_step,category,scenario,expected_behavior,verification
+24,partial-failure,worker crash ระหว่าง publish ครึ่งทาง,re-scan ตั้งแต่ต้นรอบ (stateless) — cleaner เป็น idempotent อยู่แล้ว safe,kill worker หลัง publish 50% → restart → publish ครบ + ไม่มี side effect
+24,race,row archive ใน CH แต่ batch ยังไม่ commit,เช็ค archived_at <= now() - 5 นาที (lookback window),inject row ที่ archived_at = ปัจจุบัน → watcher skip รอบนี้
+24,settlement-status,settlement.status != COMPLETED (wallet-credit ยังไม่เสร็จ),skip rows ที่ status != COMPLETED — รอ wallet-credit ก่อน,inject settlement.status = PENDING → watcher ไม่ publish paid.clean ของ row นี้
+24,multi-key,7 message shape ตามตาราง (deal_id / position_id / settlement_id / wallet_transaction_id),publish key ที่ตรงกับตาราง — ห้ามรวม shape เดียวกันหลายตาราง,ตรวจ payload ของ paid.clean → key ตรงกับ table ที่ targeting
+24,backfill,row เก่าตกค้างก่อน worker เริ่มรัน,scan ทั้ง table ในรอบแรก — แบ่ง batch ทีละ N rows ตามรอบ,start worker ใหม่ใน DB ที่มี 1M archived rows → publish ค่อยๆ ครบใน N รอบ

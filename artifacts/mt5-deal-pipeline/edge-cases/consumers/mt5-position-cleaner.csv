@@ -1,0 +1,3 @@
+pipeline_step,category,scenario,expected_behavior,verification
+27,filter-key,รับ paid.clean ที่ไม่ใช่ position_id,filter strict — skip + ack,inject payload ที่มี deal_id อย่างเดียว → ack
+27,idempotency,รับซ้ำ → DELETE no-op,DELETE WHERE position_id = X — second time = 0 rows,duplicate → ไม่ error

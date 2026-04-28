@@ -1,0 +1,4 @@
+pipeline_step,category,scenario,expected_behavior,verification
+07,idempotency,รับ clean event ตัวเดิม 2 ครั้ง,DELETE WHERE snapshot_id = X — second time = no-op (RowsAffected = 0) + log,inject duplicate → 2 ครั้งไม่ error และ delete count log = 0 ในครั้งที่ 2
+07,referential,snapshot_id ใน clean event ไม่มีใน balance DB (อาจถูกลบรอบก่อน),log info + ack (ไม่ใช่ error),DELETE row ก่อน → ส่ง clean event อีกที → ack สำเร็จ
+07,ack-policy,consumer crash หลัง DELETE แต่ก่อน commit offset,redelivery → DELETE no-op (idempotent) → safe,test crash หลัง DELETE สำเร็จ → restart → message redeliver → ไม่มี side effect

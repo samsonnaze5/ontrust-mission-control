@@ -1,0 +1,4 @@
+pipeline_step,category,scenario,expected_behavior,verification
+29,filter-key,รับ paid.clean ที่ไม่ใช่ deal_id,filter strict,inject payload ที่มี wallet_transaction_id → ack
+29,idempotency,DELETE no-op,DELETE WHERE deal_id = X AND status = SETTLED,duplicate → ไม่ error
+29,status-check,DELETE เฉพาะ accruals ที่ status = SETTLED (ห้ามแตะ PENDING ที่ยังไม่ settle),WHERE clause ต้องเช็ค status — ห้าม DELETE PENDING,inject paid.clean ของ deal ที่มี accruals สถานะผสม → DELETE เฉพาะ SETTLED

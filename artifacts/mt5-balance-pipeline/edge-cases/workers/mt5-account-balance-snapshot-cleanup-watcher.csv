@@ -1,0 +1,4 @@
+pipeline_step,category,scenario,expected_behavior,verification
+06,partial-failure,worker crash ระหว่าง publish ครึ่งทาง,re-scan ตั้งแต่ต้นรอบ (stateless) — publish เฉพาะ snapshot ที่ archive แล้วและยังมีใน balance DB,kill worker หลัง publish 50/100 events → restart รอบถัดไปครบ 100 (idempotent ที่ cleaner)
+06,race,row archive ใน CH แต่ batch ยังไม่ commit ตอน watcher อ่าน,เช็คด้วย archived_at <= now() - 5 นาที (lookback window) ป้องกัน race ของ archiver flush,inject snapshot ที่ archived_at = ปัจจุบัน → watcher ต้อง skip รอบนี้
+06,scheduling,worker ติด clock skew หรือ DST,ใช้ cron ที่ระดับ K8s/systemd — ห้ามใช้ time.Sleep ใน process,deploy หลายเครื่องเวลาต่างกัน → ยิงครั้งเดียว 00:00 UTC จริง

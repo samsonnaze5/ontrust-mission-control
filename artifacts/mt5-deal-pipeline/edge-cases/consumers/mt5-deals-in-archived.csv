@@ -1,0 +1,4 @@
+pipeline_step,category,scenario,expected_behavior,verification
+17,idempotency,re-consume → ClickHouse INSERT ซ้ำ,ReplacingMergeTree ตาม deal_id — merge เป็น 1 row,re-publish 1000 messages 2 รอบ → CH count = 1000 หลัง OPTIMIZE
+17,partial-failure,batch INSERT fail กลางคัน,batch atomic — fail แล้ว retry ทั้งก้อน + ห้าม commit Kafka offset,simulate CH error → consumer offset ไม่ commit
+17,poison,message schema mismatch,DLQ + alert,inject malformed → DLQ + consumer ยังทำ message ถัดไป

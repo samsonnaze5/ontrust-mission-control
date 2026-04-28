@@ -1,0 +1,8 @@
+pipeline_step,category,scenario,expected_behavior,verification
+09,idempotency,deal_out ตัวเดิม trigger rebate ซ้ำ (CRITICAL — financial impact),unique constraint บน (deal_id + rebate_line_id) — ห้ามคำนวณ rebate ซ้ำ,re-consume deal_out 2 ครั้ง → rebate_distributions row count คงที่ + ไม่ publish event ซ้ำ
+09,atomic-failure,INSERT distributions สำเร็จ แต่ Kafka publish ตก,ใช้ transactional outbox pattern (insert outbox table → debezium publish event) แทน publish ตรง,kill consumer ระหว่าง INSERT กับ publish → ของกลับมาแล้ว outbox push event จนสำเร็จ
+09,referential,deal owner ไม่มี IB upline เลย,log info + ack — ไม่สร้าง distribution + ไม่ publish (ไม่ใช่ error),ส่ง deal ของ user ที่ไม่มี referrer → ack + 0 distributions
+09,referential,rebate_scheme ของ symbol ไม่มี / disabled,log warning + ack — skip,ส่ง deal symbol ที่ไม่มีใน scheme → ack + 0 distributions + alert
+09,data-quality,IB chain มี loop A→B→A จาก data corruption,detect cycle + alert + ห้ามคำนวณ (ไม่งั้น infinite),inject IB tree A→B→A → consumer ตรวจเจอ + DLQ + alert
+09,boundary,deal volume = 0 หรือ profit = 0,ยังคำนวณตาม FIX_LOT/PERCENT scheme — ผลอาจเป็น 0 (skip insert ถ้า amount = 0),ส่ง deal volume = 0 → 0 distributions
+09,concurrency,IB tree เปลี่ยน (user เปลี่ยน upline) ระหว่าง deal เปิดกับปิด,lookup IB chain ตามเวลาของ deal (deal.time) ห้ามใช้เวลาคำนวณ,ปิด deal เก่าหลัง user เปลี่ยน upline → ใช้ upline เก่า ณ เวลาเปิด deal

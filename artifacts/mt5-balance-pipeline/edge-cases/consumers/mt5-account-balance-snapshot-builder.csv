@@ -1,0 +1,6 @@
+pipeline_step,category,scenario,expected_behavior,verification
+02,idempotency,Kafka at-least-once redelivery — message ตัวเดิมเข้าซ้ำ,unique constraint บน (login + time_msc) ป้องกัน duplicate row,inject duplicate message 2 ครั้ง → DB row count = 1
+02,referential,Login จาก MT5 ไม่มี mapping เป็น mt5_account_id ใน crm_central (account ใหม่),DLQ + alert — รอ account sync ก่อน retry (ห้าม INSERT snapshot ลอย),ส่ง snapshot ของ Login ที่ยังไม่ sync → DLQ + metric counter เพิ่ม
+02,missing-data,Field Login / Balance / TimeMsc หาย,reject + log + DLQ,ส่ง message ที่ Login = null → DLQ + ไม่ INSERT
+02,boundary,Balance = 0 หรือ negative (margin call/หลังขาดทุนหนัก),รับได้ INSERT ตามจริง — ห้าม filter ออก,ส่ง balance = 0 และ -1000 → INSERT สำเร็จทั้งคู่
+02,schema,TimeMsc มาเป็น unix ms string บางทีก็ ISO timestamp,parse ทั้ง 2 รูปแบบ — fallback ใช้ Time field ถ้า TimeMsc parse ไม่ได้,ส่ง TimeMsc = 1745596800000 และ Time = 2026-04-25 16:00:00.000 → ทั้งคู่ parse เป็น UTC ตรงกัน

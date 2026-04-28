@@ -1,0 +1,6 @@
+pipeline_step,category,scenario,expected_behavior,verification
+05,idempotency,Kafka redelivery → deal_id ตัวเดิม (CRITICAL — trigger rebate),unique constraint บน deal_id ด้วย ON CONFLICT DO NOTHING — ห้าม INSERT ซ้ำ (จะเกิด rebate ซ้ำ),inject duplicate 2 ครั้ง → DB row count = 1 + financial.rebate.calculated event ไม่ publish ซ้ำ
+05,referential,Login ไม่มี mapping ใน CRM,DLQ + alert,ส่ง deal Login ใหม่ที่ยังไม่ sync → DLQ
+05,missing-data,Deal / Login / Symbol / PositionID / Profit หาย,reject + DLQ,ส่ง message ขาด Profit → DLQ
+05,boundary,Profit เป็นทศนิยมเล็กมาก (0.0001) หรือลบ,รับได้ INSERT ตามจริง — เก็บเป็น decimal/numeric ห้ามใช้ float,ส่ง profit = 0.0001 และ -100 → DB เก็บค่าตรงไม่มี rounding
+05,ordering,deal out arrive ก่อน deal in,INSERT ตามปกติ — position-detector จัดการ matching,ส่ง deal_out ของ position ใหม่ก่อน → INSERT สำเร็จ

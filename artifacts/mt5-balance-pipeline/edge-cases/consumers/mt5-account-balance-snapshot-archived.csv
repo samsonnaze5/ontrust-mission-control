@@ -1,0 +1,5 @@
+pipeline_step,category,scenario,expected_behavior,verification
+05,idempotency,re-consume → ClickHouse INSERT ซ้ำ,CH table เป็น ReplacingMergeTree ตาม snapshot_id — merge เป็น 1 row,re-publish 100 messages 2 รอบ → CH row count = 100 หลัง OPTIMIZE FINAL
+05,partial-failure,batch INSERT 1000 rows fail กลางคัน,batch atomic — fail แล้ว retry ทั้งก้อน + ห้าม commit Kafka offset ก่อน CH ตอบ ok,simulate CH error 500 → consumer offset ต้องไม่ commit
+05,poison,message schema field ผิด/หาย/type mismatch,log + DLQ + alert — ห้าม consumer ติด crash loop,inject malformed → DLQ + consumer ยัง process message ถัดไปได้
+05,backpressure,producer ส่งเร็วกว่า consumer,batch size + flush interval (เช่น 5000 rows หรือ 10s) — lag ต้องไม่บวมต่อเนื่อง,เร่ง publish 100k msg/sec → consumer lag คงที่

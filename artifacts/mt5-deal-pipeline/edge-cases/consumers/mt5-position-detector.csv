@@ -1,0 +1,6 @@
+pipeline_step,category,scenario,expected_behavior,verification
+07,idempotency,deal_out ตัวเดิมเข้า 2 ครั้ง,unique constraint บน position_id — second time จะ ON CONFLICT,re-consume deal_out 2 ครั้ง → mt5_position_completes row count = 1
+07,partial-close,VolumeClosed < total volume ของ position (close ทีละบางส่วน),ห้าม INSERT — รอ deal out ตัวสุดท้ายที่ทำให้ volume_open == volume_closed,เปิด lot 1.0 ปิด 0.5 ก่อน → ห้าม INSERT — ปิด 0.5 ที่เหลือ → INSERT 1 row
+07,race,deal_out arrive ก่อน deal_in (deal_in ยังไม่อยู่ใน DB),retry กับ backoff หรือ park message รอ deal_in ค่อยมา,ส่ง deal_out ก่อน deal_in → consumer retry จนกว่า deal_in มา → match สำเร็จ
+07,multi-position,hedge mode — 2 deal_in กับ 2 deal_out ที่ position ใกล้กัน,match ตาม MT5 mode (FIFO หรือ netting) — ตัดสินใจชัดเจนใน design,เปิด long+short คน symbol → ปิดทั้งคู่ → INSERT 2 rows ตาม mode
+07,data-anomaly,deal_out ที่ไม่มี deal_in คู่กัน (data corruption),log + alert + DLQ — ห้าม INSERT position ลอย,inject deal_out PositionID ที่ไม่มี deal_in → DLQ

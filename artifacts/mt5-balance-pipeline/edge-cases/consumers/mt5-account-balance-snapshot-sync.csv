@@ -1,0 +1,4 @@
+pipeline_step,category,scenario,expected_behavior,verification
+04,idempotency,debezium re-publish snapshot.created ตัวเดิมหลัง connector restart,UPSERT ตาม snapshot_id (PK) — second time = no-op,inject duplicate → equity history row count ไม่เพิ่ม
+04,ordering,snapshot เก่ามาทีหลัง snapshot ใหม่ (delivery out-of-order),UPSERT พร้อมเช็ค time — ห้ามเอา snapshot เก่าทับค่า latest,ส่ง 2 snapshot ของ login เดียวกัน — ใหม่มาก่อน เก่ามาทีหลัง → latest_balance ยังเป็นค่าใหม่
+04,referential,trading_account_id ใน snapshot ไม่มีใน CRM แล้ว (account soft-delete),log warning + ack — ห้าม consumer ค้าง,ส่ง snapshot ของ account ที่ลบแล้ว → ack + alert metric

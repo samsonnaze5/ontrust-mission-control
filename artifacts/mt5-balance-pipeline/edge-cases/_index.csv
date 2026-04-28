@@ -1,0 +1,6 @@
+kind,component,pipeline_step,service,file
+consumer,mt5-account-balance-snapshot-builder,02,onetrust-mt5-processor,consumers/mt5-account-balance-snapshot-builder.csv
+consumer,mt5-account-balance-snapshot-sync,04,onetrust-mt5-processor,consumers/mt5-account-balance-snapshot-sync.csv
+consumer,mt5-account-balance-snapshot-archived,05,onetrust-archiver,consumers/mt5-account-balance-snapshot-archived.csv
+worker,mt5-account-balance-snapshot-cleanup-watcher,06,onetrust-archiver,workers/mt5-account-balance-snapshot-cleanup-watcher.csv
+consumer,mt5-account-balance-snapshot-cleaner,07,onetrust-archiver,consumers/mt5-account-balance-snapshot-cleaner.csv

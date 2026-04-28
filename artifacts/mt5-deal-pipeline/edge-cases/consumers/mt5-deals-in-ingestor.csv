@@ -1,0 +1,6 @@
+pipeline_step,category,scenario,expected_behavior,verification
+02,idempotency,Kafka redelivery → deal_id ตัวเดิมเข้าซ้ำ,unique constraint บน deal_id หรือ INSERT ... ON CONFLICT DO NOTHING,inject duplicate 2 ครั้ง → DB row count = 1
+02,referential,Login จาก MT5 ไม่มี mapping เป็น mt5_account_id ใน crm_central,DLQ + alert — รอ account sync ก่อน retry,ส่ง deal ของ Login ที่ยังไม่ sync → DLQ
+02,missing-data,Deal / Login / Symbol / Time / PositionID หาย,reject + DLQ,ส่ง message ขาด PositionID → DLQ
+02,schema,raw MT5 payload ใช้ CamelCase string field เช่น VolumeExt เป็น string ของตัวเลข,parse type-safe เป็น int64/decimal — convert volume_ext (raw) → lots ตามสูตร,ส่ง VolumeExt = 1000000 ใน format string → DB volume_ext = 1000000 (int64) + lots = 0.01
+02,ordering,deal in arrive AFTER deal out (race หายาก),INSERT ตามปกติ — position-detector รับมือ matching เอง,ส่ง deal_out ของ position 100 ก่อน → ส่ง deal_in ของ position 100 → INSERT ทั้งคู่

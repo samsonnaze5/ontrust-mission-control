@@ -1,0 +1,4 @@
+pipeline_step,category,scenario,expected_behavior,verification
+25,filter-key,รับ paid.clean ที่ key เป็น position_id หรือ settlement_id (ไม่ใช่ deal_id),filter strict — skip + ack ถ้าไม่มี deal_id ใน payload,inject paid.clean payload = position_id 100 → ack + ไม่ DELETE
+25,idempotency,รับ paid.clean ตัวเดิม 2 ครั้ง,DELETE no-op (RowsAffected = 0) → log + ack,inject duplicate → 2 ครั้งไม่ error
+25,fk-constraint,deal_in อาจถูก reference โดย mt5_position_completes (FK on deal_in_id),ใช้ FK CASCADE หรือ DELETE หลัง position-cleaner — ตรวจ migration,DELETE deal_in ที่ position ยังไม่ถูกลบ → ตรวจว่า FK ผ่าน (CASCADE) หรือ fail (ต้อง order)

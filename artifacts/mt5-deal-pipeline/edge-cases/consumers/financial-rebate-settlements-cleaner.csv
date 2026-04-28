@@ -1,0 +1,4 @@
+pipeline_step,category,scenario,expected_behavior,verification
+30,filter-key,รับ paid.clean ที่ไม่ใช่ settlement_id,filter strict,inject payload ที่มี deal_id → ack
+30,idempotency,DELETE no-op,DELETE WHERE id = settlement_id,duplicate → ไม่ error
+30,status-check,DELETE เฉพาะ settlement ที่ status = COMPLETED,WHERE clause เช็ค status — ห้าม DELETE PENDING/HOLD,inject settlement.status = HOLD → ไม่ DELETE

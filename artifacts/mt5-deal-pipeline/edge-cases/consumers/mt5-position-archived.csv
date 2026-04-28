@@ -1,0 +1,4 @@
+pipeline_step,category,scenario,expected_behavior,verification
+19,idempotency,re-consume → CH INSERT ซ้ำ,ReplacingMergeTree ตาม position_id,re-publish → CH count คงที่
+19,partial-failure,batch fail,atomic batch + retry,simulate CH down → offset ไม่ commit
+19,poison,malformed message,DLQ,inject bad payload → DLQ

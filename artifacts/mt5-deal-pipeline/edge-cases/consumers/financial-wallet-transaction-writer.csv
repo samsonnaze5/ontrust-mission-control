@@ -1,0 +1,8 @@
+pipeline_step,category,scenario,expected_behavior,verification
+14,idempotency,settlement ตัวเดิม apply ซ้ำ (CRITICAL — double-credit wallet),idempotent ตาม settlement_id — เช็ค settlement.status ก่อน (COMPLETED → skip),re-publish settlement event 2 ครั้ง → wallet_transactions row count = 1 + balance ไม่บวกซ้ำ
+14,referential,wallet_id ไม่มีใน DB,DLQ + alert,ส่ง settlement ที่ wallet_id ลอย → DLQ
+14,wallet-state,wallet locked / frozen ตอน credit,hold + alert + ห้าม INSERT wallet_transaction — ตั้ง settlement.status = HOLD,ส่ง settlement ของ wallet frozen → ack + alert + settlement.status = HOLD
+14,atomic-failure,INSERT wallet_transactions สำเร็จ แต่ UPDATE settlement → COMPLETED ตก,ทำใน transaction เดียว — rollback ทั้งหมดถ้า fail,inject error ที่ UPDATE → INSERT ก็ rollback → settlement ยัง PENDING
+14,boundary,settlement total = 0 (race condition จาก scheduler),skip — ห้าม INSERT wallet_transaction 0,inject settlement total = 0 → ack + ไม่ INSERT
+14,balance-calculation,balance_after compute ผิดเพราะ concurrent credit อื่น,SELECT FOR UPDATE wallet row → compute balance_after → INSERT,test 10 settlements parallel ของ wallet เดียว → balance_after เป็น chain ที่ถูกต้อง
+14,currency,settlement currency != wallet currency,convert ตาม fx rate ที่เวลาของ settlement หรือ DLQ ถ้า fx ไม่มี,ส่ง settlement USD ลง wallet THB → convert + INSERT (หรือ DLQ)

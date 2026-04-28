@@ -1,0 +1,4 @@
+pipeline_step,category,scenario,expected_behavior,verification
+23,idempotency,re-consume → CH INSERT ซ้ำ,ReplacingMergeTree ตาม wallet_transaction_id,re-publish → CH count คงที่
+23,partial-failure,batch fail,atomic batch + retry,simulate CH down → offset ไม่ commit
+23,poison,malformed message,DLQ,inject bad payload → DLQ

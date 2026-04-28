@@ -1,0 +1,2 @@
+last_extracted_at,extracted_by,source_commit_sha,source_repo,source_branch,notes
+2026-04-27T09:10:14Z,claude,2edfaf9112867748f9a3af04dc85231911594956,ontrust-mission-control,main,human-curated edge cases — no extractor; SHA tracks mission-control HEAD when structure last changed (split from edge-cases.csv into per-component files). Update last_extracted_at when adding/editing edge case rows.

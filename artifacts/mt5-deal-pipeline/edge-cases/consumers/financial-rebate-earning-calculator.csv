@@ -1,0 +1,5 @@
+pipeline_step,category,scenario,expected_behavior,verification
+16,idempotency,wallet transaction event เข้า 2 ครั้ง,track processed_txn_id หรือใช้ UPSERT delta — ห้าม double-count,inject duplicate → IB earning total ไม่บวกซ้ำ
+16,filter,wallet transaction type ไม่ใช่ REBATE_CREDIT (เช่น DEPOSIT/WITHDRAW),filter ตั้งแต่ consume — skip + ack ไม่ update earning,ส่ง DEPOSIT 1000 → ack + earning total ไม่ขยับ
+16,filter,reference_type ไม่ใช่ rebate_settlement,filter — skip,ส่ง REBATE_CREDIT ที่ reference_type = manual_adjustment → ack + ไม่ update
+16,concurrency,user เดียวกันมี wallet txns หลายตัวใน partition,atomic increment (UPDATE earnings SET total = total + X) หรือ row lock,test 100 txns parallel ของ user เดียว → earning total = sum ของ amounts

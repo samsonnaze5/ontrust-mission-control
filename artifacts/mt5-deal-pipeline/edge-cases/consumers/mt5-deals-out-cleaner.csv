@@ -1,0 +1,4 @@
+pipeline_step,category,scenario,expected_behavior,verification
+26,filter-key,รับ paid.clean ที่ไม่ใช่ deal_id,filter strict — skip + ack,inject payload ที่ไม่มี deal_id → ack
+26,idempotency,รับซ้ำ → DELETE no-op,DELETE WHERE deal_id = X — second time = 0 rows,duplicate event → ไม่ error
+26,fk-constraint,deal_out อาจถูก reference โดย rebate_distributions และ mt5_position_completes,ใช้ CASCADE หรือ DELETE หลัง distribution-cleaner + position-cleaner,DELETE deal_out ก่อน distributions ถูกลบ → fail ถ้าไม่มี CASCADE
